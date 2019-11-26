@@ -12,6 +12,10 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
       text: 'Link to another page',
     },
     {
+      value: 'link-tab',
+      text: 'Link to another page in a new tab',
+    },
+    {
       value: 'form',
       text: 'Open a form in a modal',
     },
@@ -64,6 +68,10 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     switch (ctaData.action) {
       case "link":
         cta = makeAnchor();
+        break;
+      case "link-tab":
+        cta = makeAnchor();
+        cta.$.setAttribute('target', '_blank');
         break;
       case "form":
         cta = makeButton();
