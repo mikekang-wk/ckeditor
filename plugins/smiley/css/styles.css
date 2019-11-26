@@ -1,0 +1,42 @@
+
+.cke_dialog_body .icomoon-search-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.icomoon-search-input {
+  border: 2px solid #707070;
+  border-radius: 4px;
+  box-sizing: content-box;
+  display: block;
+  margin: .25em 0 0;
+  height: 1.5rem;
+  padding: 0;
+  text-indent: .25em;
+  width: 100%;
+}
+
+.cke-dialog-icomoon-list {
+  columns: 2;
+  list-style: none;
+}
+
+.cke-dialog-icomoon-list button {
+  align-items: center;
+  display: flex;
+  padding: .5em 0;
+}  
+
+.cke-dialog-icomoon-list button span {
+  margin-left: 1em;
+}
+
+.cke-dialog-icomoon-list button * {
+  pointer-events: none;
+}
+
+.cke-dialog-icomoon-list i {
+  font-size: 2.5rem;
+}
