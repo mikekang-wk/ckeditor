@@ -47,20 +47,77 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
   function createCtaFromCtaData() {
     var cta;
 
+    function addAppearanceClasses(el) {
+      switch (ctaData.appearance) {
+        case "link-arrow":
+          el.classList.add("btn-link");
+          el.classList.add("fancy-underline");
+          el.classList.add("link-arrow");
+          break;
+        case "primary":
+          el.classList.add("btn");
+          el.classList.add("btn-primary");
+          break;
+        case "secondary":
+          el.classList.add("btn");
+          el.classList.add("btn-secondary");
+          break;
+        case "tertiary":
+          el.classList.add("btn");
+          el.classList.add("btn-tertiary");
+          break;
+        default:
+          break;
+      }
+    }
+
     function makeAnchor(){
       var el = new CKEDITOR.dom.element('a');
 
+      el.$.textContent = ctaData.text;
       el.$.setAttribute('href', ctaData.reference);
+
+      addAppearanceClasses(el.$);
 
       return el;
     }
 
-    function makeButton() {
+    function makeMarketoButton() {
       var el = new CKEDITOR.dom.element('button');
 
+      el.$.classList.add('button-marketo-event');
+
+      el.$.setAttribute('data-marketo-id', ctaData.reference);
       el.$.setAttribute('data-target', '#wk_modal');
       el.$.setAttribute('data-toggle', 'modal');
       el.$.setAttribute('type', 'button');
+
+      el.$.textContent = ctaData.text;
+
+      addAppearanceClasses(el.$);
+
+      return el;
+    }
+
+    function makeWistiaButton() {
+      var el = new CKEDITOR.dom.element('div');
+      var btn = new CKEDITOR.dom.element('button');
+      var wistiaId = 'wistia_async_' + ctaData.reference;
+
+      el.$.classList.add('wistia_embed');
+      el.$.classList.add(wistiaId);
+
+      el.$.setAttribute('popover', 'true');
+      el.$.setAttribute('popoverAnimateThumbnail', 'true');
+      el.$.setAttribute('popoverContent', 'link');
+      el.$.setAttribute('style', 'display:inline-block;');
+
+      btn.$.setAttribute('type', 'button');
+      btn.$.textContent = ctaData.text;
+
+      addAppearanceClasses(btn.$);
+
+      el.append(btn);
 
       return el;
     }
@@ -74,40 +131,14 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
         cta.$.setAttribute('target', '_blank');
         break;
       case "form":
-        cta = makeButton();
-        cta.$.classList.add('button-marketo-event');
-        cta.$.setAttribute('data-marketo-id', ctaData.reference);
+        cta = makeMarketoButton();
         break;
       case "video":
-        cta = makeButton();
-        cta.$.classList.add('button-wistia');
-        cta.$.setAttribute('data-wistia-id', ctaData.reference);
+        cta = makeWistiaButton();
         break;
       default:
         break;
     };
-
-    switch (ctaData.appearance) {
-      case "link-arrow":
-        cta.$.classList.add("link-arrow");
-        break;
-      case "primary":
-        cta.$.classList.add("btn");
-        cta.$.classList.add("btn-primary");
-        break;
-      case "secondary":
-        cta.$.classList.add("btn");
-        cta.$.classList.add("btn-secondary");
-        break;
-      case "tertiary":
-        cta.$.classList.add("btn");
-        cta.$.classList.add("btn-tertiary");
-        break;
-      default:
-        break;
-    }
-
-    cta.$.textContent = ctaData.text;
 
     return cta;
   }
@@ -181,7 +212,7 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     inputText.setAttribute('type', 'text');
 
     labelAction.textContent = "Choose Action";
-    labelReference.textContent = "URL or Node Reference";
+    labelReference.textContent = "URL or Node ID";
     labelAppearance.textContent = "Appearance";
     labelText.textContent = "Display Text";
 

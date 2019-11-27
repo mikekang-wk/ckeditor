@@ -10,8 +10,7 @@
     icons: 'call_to_action',
     init: function(editor) {
       editor.addCommand('addCallToAction', new CKEDITOR.dialogCommand('cta-dialog', {
-        allowedContent: 'p',
-        requiredContent: 'p'
+        allowedContent: 'p, div, button',
       }));
 
       editor.ui.addButton('call_to_action', {
