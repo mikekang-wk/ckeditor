@@ -1,14 +1,13 @@
-﻿const pluginName = 'call-to-action';
-
-CKEDITOR.plugins.add(pluginName, {
-  icons: pluginName,
-  init: function( editor ) {
-    editor.addCommand('addCallToAction', new CKEDITOR.dialogCommand( 'cta-dialog', {
+﻿CKEDITOR.plugins.add('call-to-action', {
+  requires: 'dialog',
+  icons: 'icon-call-to-action',
+  init: function(editor) {
+    editor.addCommand('addCallToAction', new CKEDITOR.dialogCommand('cta-dialog', {
       allowedContent: 'p',
       requiredContent: 'p'
     }));
 
-    editor.ui.addButton(pluginName, {
+    editor.ui.addButton('icon-call-to-action', {
         label: 'Insert a call to action',
         command: 'addCallToAction',
         toolbar: 'insert'

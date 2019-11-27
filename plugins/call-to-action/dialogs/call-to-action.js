@@ -224,7 +224,7 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
   };
 
   return {
-    title: 'Insert a call to action',
+    title: 'Create a call to action',
     contents: [ {
       id: 'tab1',
       label: '',

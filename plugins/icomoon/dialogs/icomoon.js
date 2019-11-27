@@ -1,17 +1,8 @@
-/**
- * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
- */
-
-CKEDITOR.dialog.add( 'smiley', function( editor ) {
+CKEDITOR.dialog.add( 'icomoon-dialog', function(editor) {
   var config = editor.config,
-    lang = editor.lang.smiley,
     images = editor.icomoon,
-    columns = config.smiley_columns || 8,
     i;
 
-  // Simulate "this" of a dialog for non-dialog events.
-  // @type {CKEDITOR.dialog}
   var dialog;
 
   function insertElemToWYSI(el){
@@ -23,18 +14,18 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
         class: title,
         title: title,
       }
-    } );
+    });
 
     editor.insertElement( img );
 
     dialog.hide();
   }
 
-  var onClick = function( evt ) {
+  var onClick = function(evt) {
     var target = evt.data.getTarget(),
         targetName = target.getName();
 
-    if ( targetName == 'button' ) {
+    if (targetName == 'button') {
       insertElemToWYSI(target);
     }
   };
@@ -68,17 +59,16 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
     }
   });
 
-  // Build the HTML for the smiley images table.
   var labelId = CKEDITOR.tools.getNextId() + '_smiley_emtions_label';
   var html = [
-    '<div>' +
-    '<span id="' + labelId + '" class="cke_voice_label">' + lang.options + '</span>',
+    '<div>',
     '<label class="icomoon-search-label">Search for Icons <input id="icomoon-search-input" class="icomoon-search-input" type="search" /></label>',
     '<ul id="cke-dialog-icomoon-list" class="cke-dialog-icomoon-list">',
   ];
 
   var size = images.length;
-  for ( i = 0; i < size; i++ ) {
+
+  for (i = 0; i < size; i+= 1) {
     var smileyLabelId = 'cke_smile_label_' + i + '_' + CKEDITOR.tools.getNextNumber();
     let iconName = "icon-";
 
@@ -95,9 +85,9 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 
   html.push( '</ul></div>' );
 
-  var smileySelector = {
+  var iconSelector = {
     type: 'html',
-    id: 'smileySelector',
+    id: 'iconSelector',
     html: html.join( '' ),
     onLoad: function( event ) {
       dialog = event.sender;
@@ -113,13 +103,10 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
       }, 0);
     },
     onClick: onClick,
-    style: 'width: 100%; border-collapse: separate;'
   };
 
   return {
-    title: editor.lang.smiley.title,
-    // minWidth: 85,
-    // minHeight: 120,
+    title: 'Choose an icon to insert',
     contents: [ {
       id: 'tab1',
       label: '',
@@ -127,9 +114,9 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
       expand: true,
       padding: 0,
       elements: [
-        smileySelector
+        iconSelector
       ]
-    } ],
+    }],
     buttons: [ CKEDITOR.dialog.cancelButton ]
   };
-} );
+});
