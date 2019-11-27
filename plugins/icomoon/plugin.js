@@ -1,48 +1,57 @@
-﻿CKEDITOR.plugins.add('icomoon', {
-  requires: 'dialog',
-  icons: 'icomoon',
-  init: function(editor) {
-    editor.addCommand('addIcon', new CKEDITOR.dialogCommand('icomoon-dialog', {
-      allowedContent: 'p',
-      requiredContent: 'p'
-    }));
+﻿/**
+ * @file
+ * Icomoon plugin.
+ */
 
-    editor.ui.addButton && editor.ui.addButton('icomoon', {
-      label: 'Insert an icon',
-      command: 'addIcon',
-      toolbar: 'insert'
-    });
+(function ($, Drupal, CKEDITOR) {
 
-    CKEDITOR.dialog.add('icomoon-dialog', this.path + 'dialogs/icomoon.js' );
+  CKEDITOR.plugins.add('icomoon', {
+    requires: 'dialog',
+    icons: 'icomoon',
+    init: function(editor) {
+      editor.addCommand('addIcon', new CKEDITOR.dialogCommand('icomoon-dialog', {
+        allowedContent: 'p',
+        requiredContent: 'p'
+      }));
 
-    function addCSS(filename){
-      var head = document.getElementsByTagName('head')[0];
-      var style = document.createElement('link');
+      editor.ui.addButton && editor.ui.addButton('icomoon', {
+        label: 'Insert an icon',
+        command: 'addIcon',
+        toolbar: 'insert'
+      });
 
-      style.href = filename;
-      style.type = 'text/css';
-      style.rel = 'stylesheet';
+      CKEDITOR.dialog.add('icomoon-dialog', this.path + 'dialogs/icomoon.js' );
 
-      head.append(style);
-    }
+      function addCSS(filename){
+        var head = document.getElementsByTagName('head')[0];
+        var style = document.createElement('link');
 
-    addCSS('https://d1azc1qln24ryf.cloudfront.net/49134/WorkivaUI/style-cf.css');
-    addCSS(this.path + 'css/styles.css');
+        style.href = filename;
+        style.type = 'text/css';
+        style.rel = 'stylesheet';
 
-    var icomoonEndpoint = 'https://i.icomoon.io/public/a5dc34c96c/WorkivaUI/selection.json';
-    var xhr = new XMLHttpRequest();
-
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        var response = JSON.parse(xhr.responseText);
-
-        editor.icomoon = response.icons;
-      } else {
-        console.log('XHR request failed');
+        head.append(style);
       }
-    };
 
-    xhr.open('GET', icomoonEndpoint);
-    xhr.send();
-  },
-});
+      addCSS('https://d1azc1qln24ryf.cloudfront.net/49134/WorkivaUI/style-cf.css');
+      addCSS(this.path + 'css/styles.css');
+
+      var icomoonEndpoint = 'https://i.icomoon.io/public/a5dc34c96c/WorkivaUI/selection.json';
+      var xhr = new XMLHttpRequest();
+
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          var response = JSON.parse(xhr.responseText);
+
+          editor.icomoon = response.icons;
+        } else {
+          console.log('XHR request failed');
+        }
+      };
+
+      xhr.open('GET', icomoonEndpoint);
+      xhr.send();
+    },
+  });
+
+})(jQuery, Drupal, CKEDITOR);
