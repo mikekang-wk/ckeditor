@@ -1,10 +1,5 @@
 CKEDITOR.dialog.add('cta-dialog', function(editor) {
-  var ctaData = {
-    action: '',
-    reference: '',
-    appearance: '',
-    text: '',
-  };
+  var ctaData = {};
 
   var actionOptions = [
     {
@@ -17,7 +12,7 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     },
     {
       value: 'form',
-      text: 'Open a form in a modal',
+      text: 'Open a Marketo form in a modal',
     },
     {
       value: 'video',
@@ -43,6 +38,24 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
       text: 'Tertiary Button',
     },
   ];
+
+  function showMarketoFields(){
+    var fieldCollection = document.querySelectorAll('#cta-form [data-marketo-field]');
+    var fieldArray = [].slice.call(fieldCollection);
+
+    for (let i = 0; i < fieldArray.length; i += 1) {
+      fieldArray[i].style.display = 'block';
+    }
+  }
+
+  function hideMarketoFields(){
+    var fieldCollection = document.querySelectorAll('#cta-form [data-marketo-field]');
+    var fieldArray = [].slice.call(fieldCollection);
+
+    for (let i = 0; i < fieldArray.length; i += 1) {
+      fieldArray[i].style.display = 'none';
+    }
+  }
 
   function createCtaFromCtaData() {
     var cta;
@@ -87,10 +100,13 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
 
       el.$.classList.add('button-marketo-event');
 
-      el.$.setAttribute('data-marketo-id', ctaData.reference);
       el.$.setAttribute('data-target', '#wk_modal');
       el.$.setAttribute('data-toggle', 'modal');
       el.$.setAttribute('type', 'button');
+
+      el.$.setAttribute('data-marketo-id', ctaData.reference);
+      el.$.setAttribute('data-marketo-event', ctaData.event);
+      el.$.setAttribute('data-marketo-title', ctaData.title);
 
       el.$.textContent = ctaData.text;
 
@@ -123,56 +139,80 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     }
 
     switch (ctaData.action) {
-      case "link":
+      case 'link':
         cta = makeAnchor();
         break;
-      case "link-tab":
+      case 'link-tab':
         cta = makeAnchor();
         cta.$.setAttribute('target', '_blank');
         break;
-      case "form":
+      case 'form':
         cta = makeMarketoButton();
         break;
-      case "video":
+      case 'video':
         cta = makeWistiaButton();
         break;
       default:
         break;
     };
 
-    return cta;
+    return {
+      cta: cta
+    }
+  }
+
+  function handleActionChange(e) {
+    var select = e.target;
+    var selectedValue = select.options[select.selectedIndex].value;
+
+    if (selectedValue === 'form') {
+      showMarketoFields();
+    } else {
+      hideMarketoFields();
+    }
   }
 
   function resetFields() {
-    var action = document.getElementById('cta-select-action');
-    var appearance = document.getElementById('cta-select-appearance');
-    var reference = document.getElementById('cta-input-reference');
-    var text = document.getElementById('cta-input-text');
+    var selectCollection = document.querySelectorAll('#cta-form select');
+    var selectArray = [].slice.call(selectCollection);
 
-    action.options[0].value;
-    appearance.options[0].value;
-    reference.value = "";
-    text.value = "";
+    var inputsCollection = document.querySelectorAll('#cta-form input');
+    var inputArray = [].slice.call(inputsCollection);
+
+    for (let i = 0; i < selectArray.length; i += 1) {
+      selectArray[i].selectedIndex = 0;
+    }
+
+    for (let i = 0; i < inputArray.length; i += 1) {
+      inputArray[i].value = '';
+    }
+
+    hideMarketoFields();
   }
 
   function clearData() {
-    ctaData.action = '';
-    ctaData.reference = '';
-    ctaData.appearance = '';
-    ctaData.text = '';
+    for (var key in ctaData) {
+      if (ctaData.hasOwnProperty(key)) {
+          ctaData[key] = '';
+      }
+    }
   }
 
   function updateCtaData() {
-    var action = document.getElementById('cta-select-action');
-    var appearance = document.getElementById('cta-select-appearance');
-    var reference = document.getElementById('cta-input-reference');
-    var text = document.getElementById('cta-input-text');
+    var fieldCollection = document.querySelectorAll('#cta-form [data-cta]');
+    var fieldArray = [].slice.call(fieldCollection);
 
-    ctaData.action = action.options[action.selectedIndex].value;
-    ctaData.appearance = appearance.options[appearance.selectedIndex].value;
+    for (let i = 0; i < fieldArray.length; i += 1) {
+      const key = fieldArray[i].getAttribute('data-cta');
 
-    ctaData.reference = reference.value;
-    ctaData.text = text.value;
+      if (fieldArray[i].tagName === 'SELECT') {
+        ctaData[key] = fieldArray[i].options[fieldArray[i].selectedIndex].value;
+      }
+
+      if (fieldArray[i].tagName === 'INPUT' && fieldArray[i].type === 'text') {
+        ctaData[key] = fieldArray[i].value;
+      }
+    }
   }
 
   function buildFormHTML() {
@@ -182,22 +222,28 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
 
     var inputReference = document.createElement('input');
     var inputText = document.createElement('input');
+    var inputMarketoEvent = document.createElement('input');
+    var inputMarketoTitle = document.createElement('input');
 
     var labelAction = document.createElement('label');
     var labelReference = document.createElement('label');
     var labelAppearance = document.createElement('label');
     var labelText = document.createElement('label');
+    var labelMarketoEvent = document.createElement('label');
+    var labelMarketoTitle = document.createElement('label');
 
     var selectAction = document.createElement('select');
     var selectAppearance = document.createElement('select');
 
     selectAction.setAttribute('id', 'cta-select-action');
+    selectAction.setAttribute('data-cta', 'action');
 
     for (let i = 0; i < actionOptions.length; i += 1) {
       selectAction.options[selectAction.options.length] = new Option(actionOptions[i].text, actionOptions[i].value);
     }
 
     selectAppearance.setAttribute('id', 'cta-select-appearance');
+    selectAppearance.setAttribute('data-cta', 'appearance');
 
     for (let i = 0; i < appearanceOptions.length; i += 1) {
       selectAppearance.options[selectAppearance.options.length] = new Option(appearanceOptions[i].text, appearanceOptions[i].value);
@@ -207,22 +253,41 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
 
     inputReference.setAttribute('id', 'cta-input-reference');
     inputReference.setAttribute('type', 'text');
+    inputReference.setAttribute('data-cta', 'reference');
+
+    inputMarketoEvent.setAttribute('id', 'cta-input-event');
+    inputMarketoEvent.setAttribute('type', 'text');
+    inputMarketoEvent.setAttribute('data-cta', 'event');
+
+    inputMarketoTitle.setAttribute('id', 'cta-input-title');
+    inputMarketoTitle.setAttribute('type', 'text');
+    inputMarketoTitle.setAttribute('data-cta', 'title');
 
     inputText.setAttribute('id', 'cta-input-text');
     inputText.setAttribute('type', 'text');
+    inputText.setAttribute('data-cta', 'text');
 
     labelAction.textContent = "Choose Action";
     labelReference.textContent = "URL or Node ID";
     labelAppearance.textContent = "Appearance";
     labelText.textContent = "Display Text";
+    labelMarketoEvent.textContent = "Marketo Event";
+    labelMarketoTitle.textContent = "Marketo Title";
+
+    labelMarketoEvent.setAttribute('data-marketo-field', '');
+    labelMarketoTitle.setAttribute('data-marketo-field', '');
 
     labelReference.appendChild(inputReference);
     labelAction.appendChild(selectAction);
     labelAppearance.appendChild(selectAppearance);
     labelText.appendChild(inputText);
+    labelMarketoEvent.appendChild(inputMarketoEvent);
+    labelMarketoTitle.appendChild(inputMarketoTitle);
 
     formWrapper.appendChild(labelAction);
     formWrapper.appendChild(labelReference);
+    formWrapper.appendChild(labelMarketoEvent);
+    formWrapper.appendChild(labelMarketoTitle);
     formWrapper.appendChild(labelAppearance);
     formWrapper.appendChild(labelText);
 
@@ -230,6 +295,12 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
 
     return frag;
   }
+
+  document.addEventListener("change", function(e) {
+    if (e.target.getAttribute('id') === 'cta-select-action') {
+      handleActionChange(e);
+    }
+  });
 
   var ctaForm = {
     type: 'html',
@@ -271,9 +342,11 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
       var cta;
 
       updateCtaData();
-      cta = createCtaFromCtaData();
+      cta = createCtaFromCtaData().cta;
 
-      editor.insertElement(cta);
+      if (cta) {
+        editor.insertElement(cta);
+      }
     }
   };
 });
