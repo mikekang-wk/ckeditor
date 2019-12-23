@@ -37,4 +37,6 @@ CKEDITOR.editorConfig = function( config ) {
   ];
 
   config.extraPlugins = pluginsArray.join(",");
+
+  config.skin = 'bootstrapck';
 };

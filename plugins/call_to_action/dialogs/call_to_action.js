@@ -104,9 +104,7 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
       el.$.setAttribute('data-toggle', 'modal');
       el.$.setAttribute('type', 'button');
 
-      el.$.setAttribute('data-marketo-id', ctaData.reference);
-      el.$.setAttribute('data-marketo-event', ctaData.event);
-      el.$.setAttribute('data-marketo-title', ctaData.title);
+      el.$.setAttribute('data-node-id', ctaData.reference);
 
       el.$.textContent = ctaData.text;
 
@@ -123,9 +121,10 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
       el.$.classList.add('wistia_embed');
       el.$.classList.add(wistiaId);
 
-      el.$.setAttribute('popover', 'true');
-      el.$.setAttribute('popoverAnimateThumbnail', 'true');
-      el.$.setAttribute('popoverContent', 'link');
+      el.$.classList.add('popover=true');
+      el.$.classList.add('popoverAnimateThumbnail=true');
+      el.$.classList.add('popoverContent=link');
+
       el.$.setAttribute('style', 'display:inline-block;');
 
       btn.$.setAttribute('type', 'button');
@@ -159,6 +158,10 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     return {
       cta: cta
     }
+  }
+
+  function fetchMarketoIDs() {
+
   }
 
   function handleActionChange(e) {
@@ -222,15 +225,11 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
 
     var inputReference = document.createElement('input');
     var inputText = document.createElement('input');
-    var inputMarketoEvent = document.createElement('input');
-    var inputMarketoTitle = document.createElement('input');
 
     var labelAction = document.createElement('label');
     var labelReference = document.createElement('label');
     var labelAppearance = document.createElement('label');
     var labelText = document.createElement('label');
-    var labelMarketoEvent = document.createElement('label');
-    var labelMarketoTitle = document.createElement('label');
 
     var selectAction = document.createElement('select');
     var selectAppearance = document.createElement('select');
@@ -255,14 +254,6 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     inputReference.setAttribute('type', 'text');
     inputReference.setAttribute('data-cta', 'reference');
 
-    inputMarketoEvent.setAttribute('id', 'cta-input-event');
-    inputMarketoEvent.setAttribute('type', 'text');
-    inputMarketoEvent.setAttribute('data-cta', 'event');
-
-    inputMarketoTitle.setAttribute('id', 'cta-input-title');
-    inputMarketoTitle.setAttribute('type', 'text');
-    inputMarketoTitle.setAttribute('data-cta', 'title');
-
     inputText.setAttribute('id', 'cta-input-text');
     inputText.setAttribute('type', 'text');
     inputText.setAttribute('data-cta', 'text');
@@ -271,23 +262,14 @@ CKEDITOR.dialog.add('cta-dialog', function(editor) {
     labelReference.textContent = "URL or Node ID";
     labelAppearance.textContent = "Appearance";
     labelText.textContent = "Display Text";
-    labelMarketoEvent.textContent = "Marketo Event";
-    labelMarketoTitle.textContent = "Marketo Title";
-
-    labelMarketoEvent.setAttribute('data-marketo-field', '');
-    labelMarketoTitle.setAttribute('data-marketo-field', '');
 
     labelReference.appendChild(inputReference);
     labelAction.appendChild(selectAction);
     labelAppearance.appendChild(selectAppearance);
     labelText.appendChild(inputText);
-    labelMarketoEvent.appendChild(inputMarketoEvent);
-    labelMarketoTitle.appendChild(inputMarketoTitle);
 
     formWrapper.appendChild(labelAction);
     formWrapper.appendChild(labelReference);
-    formWrapper.appendChild(labelMarketoEvent);
-    formWrapper.appendChild(labelMarketoTitle);
     formWrapper.appendChild(labelAppearance);
     formWrapper.appendChild(labelText);
 

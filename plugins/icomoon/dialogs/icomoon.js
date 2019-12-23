@@ -77,7 +77,7 @@ CKEDITOR.dialog.add( 'icomoon-dialog', function(editor) {
     html.push(
       '<li>' +
       '<button type="button" aria-labelledby="' + smileyLabelId + '">',
-      '<i class="cke_hand ' + iconName + '" title="'+ iconName +'" style=""></i>' +
+      '<i class="cke_hand ' + iconName + '" title="'+ iconName +'" style="">&nbsp;</i>' +
       '<span>' + iconName + '</span>' +
       '</button>', '</li>'
     );
