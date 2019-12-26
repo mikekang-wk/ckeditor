@@ -34,6 +34,8 @@ CKEDITOR.editorConfig = function( config ) {
   var pluginsArray = [
     'icomoon',
     'call_to_action',
+    'htmlwriter',
+    'autogrow',
   ];
 
   config.extraPlugins = pluginsArray.join(",");
