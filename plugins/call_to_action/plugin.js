@@ -3,7 +3,7 @@
  * Call to action plugin.
  */
 
-(function ($, Drupal, CKEDITOR) {
+(function () {
 
   CKEDITOR.plugins.add('call_to_action', {
     requires: 'dialog',
@@ -35,4 +35,4 @@
       addCSS(this.path + 'css/styles.css');
     },
   });
-})(jQuery, Drupal, CKEDITOR);
+})();

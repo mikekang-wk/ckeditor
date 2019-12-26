@@ -3,7 +3,7 @@
  * Icomoon plugin.
  */
 
-(function ($, Drupal, CKEDITOR) {
+(function () {
 
   CKEDITOR.plugins.add('icomoon', {
     requires: 'dialog',
@@ -32,7 +32,6 @@
 
         head.append(style);
       }
-
       addCSS('https://d1azc1qln24ryf.cloudfront.net/49134/WorkivaUI/style-cf.css');
       addCSS(this.path + 'css/styles.css');
 
@@ -54,4 +53,4 @@
     },
   });
 
-})(jQuery, Drupal, CKEDITOR);
+})();
