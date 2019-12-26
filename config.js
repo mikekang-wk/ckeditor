@@ -13,15 +13,16 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'insert' },
     { name: 'others' },
   ];
-
-//  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
-
   // Dialog windows are also simplified.
   config.removeDialogTabs = 'link:advanced';
+  //  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
+  config.skin = 'bootstrapck';
+  config.forcePasteAsPlainText = true;
+//  config.forcePasteAsPlainText = 'allow-word';
+  config.allowedContent = true;
 
   var pluginsArray = [
-    'icomoon',
-    'call_to_action',
+    'widget',
     'htmlwriter',
     'autogrow',
     'sourcearea',
@@ -30,16 +31,13 @@ CKEDITOR.editorConfig = function( config ) {
     'table',
     'pastetext',
     'removeformat',
+    'lineutils',
+    'widgetselection',
+    //
+    'wk_button',
+//    'icomoon',
+//    'call_to_action',
   ];
 
   config.extraPlugins = pluginsArray.join(",");
-
-  config.skin = 'bootstrapck';
-
-  /*
-    Paste as plain text plugin
-  */
-  config.forcePasteAsPlainText = true;
-//  config.forcePasteAsPlainText = 'allow-word';
-  config.allowedContent = true;
 };
