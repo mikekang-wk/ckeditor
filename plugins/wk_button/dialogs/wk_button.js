@@ -12,33 +12,50 @@ CKEDITOR.dialog.add( 'wk_button', function(editor) {
       padding: 0,
       elements: [
         {
-          id: 'align',
+          id: 'action',
           type: 'select',
-          label: 'Align',
+          label: 'Action',
           items: [
-              [ editor.lang.common.notSet, '' ],
-              [ editor.lang.common.alignLeft, 'left' ],
-              [ editor.lang.common.alignRight, 'right' ],
-              [ editor.lang.common.alignCenter, 'center' ]
+            ['Link to another page', 'link'],
+            ['Link to another page in a new tab', 'link-tab'],
+            ['Open a Marketo form in a modal', 'form'],
+            ['Play a video in a modal', 'video'],
           ],
-          setup: function( widget ) {
-              this.setValue( widget.data.align );
+          setup: function(widget) {
+              this.setValue(widget.data.action || 'link');
           },
-          commit: function( widget ) {
-              widget.setData( 'align', this.getValue() );
+          commit: function(widget) {
+              widget.setData('action', this.getValue());
+          },
+        },
+        {
+          id: 'appearance',
+          type: 'select',
+          label: 'Appearance',
+          items: [
+            ['Link Arrow', 'link-arrow'],
+            ['Primary Button', 'primary'],
+            ['Secondary Button', 'secondary'],
+            ['Tertiary Button', 'tertiary'],
+          ],
+          setup: function(widget) {
+              this.setValue(widget.data.appearance || 'link-arrow');
+          },
+          commit: function(widget) {
+              widget.setData('appearance', this.getValue());
           }
         },
         {
-          id: 'width',
+          id: 'reference',
           type: 'text',
-          label: 'Width',
-          setup: function( widget ) {
-              this.setValue( widget.data.width );
+          label: 'Reference (URL / Video ID / Marketo Node ID)',
+          setup: function(widget) {
+              this.setValue(widget.data.reference || '/');
           },
           commit: function(widget) {
-              widget.setData('width', this.getValue());
+              widget.setData('reference', this.getValue());
           }
-        }
+        },
       ]
     }],
   };

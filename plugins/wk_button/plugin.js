@@ -5,52 +5,136 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/wk_button.js');
 
+      CKEDITOR.dtd.$editable['a'] = 1;
+      CKEDITOR.dtd.$editable['button'] = 1;
+
       editor.widgets.add('wk_button', {
-        allowedContent:
-            'div(!simplebox); div(!simplebox-content); h2(!simplebox-title)',
         button: 'Create a call to action',
         data: function() {
+          const el = this.element.$;
+          const action = this.data.action;
+          const appearance = this.data.appearance;
+          const reference = this.data.reference;
 
-            if ( this.data.width == '' )
-                this.element.removeStyle( 'width' );
-            else
-                this.element.setStyle( 'width', this.data.width );
+          function makeLink(){
+            el.setAttribute('href', reference);
+          }
 
-            this.element.removeClass( 'align-left' );
-            this.element.removeClass( 'align-right' );
-            this.element.removeClass( 'align-center' );
-            if ( this.data.align )
-                this.element.addClass( 'align-' + this.data.align );
+          function makeLinkTab(){
+            el.setAttribute('href', reference);
+            el.setAttribute('target', '_blank');
+          }
+
+          function makeMarketoButton() {
+            el.classList.add('button-marketo-event');
+            el.setAttribute('data-target', '#wk_modal');
+            el.setAttribute('data-toggle', 'modal');
+            el.setAttribute('data-node-id', reference);
+          }
+
+          function makeWistiaButton() {
+            el.classList.add('wistia_embed');
+            el.classList.add('wistia_async_' + reference);
+            el.classList.add('popover=true');
+            el.classList.add('popoverAnimateThumbnail=true');
+            el.classList.add('popoverContent=link');
+          }
+
+          function hardReset () {
+            el.className = 'wk-button cke_widget_editable cke_widget_element';
+
+            el.removeAttribute('data-target');
+            el.removeAttribute('data-toggle');
+            el.removeAttribute('data-node-id');
+            el.removeAttribute('style');
+            el.removeAttribute('target');
+
+            el.setAttribute('href', '/');
+          }
+
+          hardReset();
+
+          if (action) {
+            el.setAttribute('data-wk-button-action', action);
+
+            switch (action) {
+              case 'link':
+                cta = makeLink();
+                break;
+              case 'link-tab':
+                cta = makeLinkTab();
+                break;
+              case 'form':
+                cta = makeMarketoButton();
+                break;
+              case 'video':
+                cta = makeWistiaButton();
+                break;
+              default:
+                break;
+            };
+          }
+
+          if (appearance) {
+            el.setAttribute('data-wk-button-appearance', appearance);
+
+            switch (appearance) {
+              case 'link-arrow':
+                el.classList.add('btn-link');
+                el.classList.add('fancy-underline');
+                el.classList.add('link-arrow');
+                break;
+              case 'primary':
+                el.classList.add('btn');
+                el.classList.add('btn-primary');
+                break;
+              case 'secondary':
+                el.classList.add('btn');
+                el.classList.add('btn-secondary');
+                break;
+              case 'tertiary':
+                el.classList.add('btn');
+                el.classList.add('btn-tertiary');
+                break;
+              default:
+                break;
+            }
+          }
+
+          if (reference) {
+            el.setAttribute('data-wk-button-reference', reference);
+          }
         },
         dialog: 'wk_button',
         editables: {
-            title: {
-                selector: '.simplebox-title'
-            },
-            content: {
-                selector: '.simplebox-content'
-            }
+          content: {
+            selector: '.wk-button'
+          }
         },
         init: function() {
-            var width = this.element.getStyle( 'width' );
-            if ( width )
-                this.setData( 'width', width );
-            if ( this.element.hasClass( 'align-left' ) )
-                this.setData( 'align', 'left' );
-            if ( this.element.hasClass( 'align-right' ) )
-                this.setData( 'align', 'right' );
-            if ( this.element.hasClass( 'align-center' ) )
-                this.setData( 'align', 'center' );
+          const el = this.element;
+          const action = el.getAttribute('data-wk-button-action');
+          const appearance = el.getAttribute('data-wk-button-appearance');
+          const reference = el.getAttribute('data-wk-button-reference');
+
+          if (action) {
+            this.setData('action', action);
+          }
+
+          if (appearance) {
+            this.setData('appearance', appearance);
+          }
+
+          if (reference) {
+            this.setData('reference', reference);
+          }
         },
-        requiredContent: 'div(simplebox)',
-        template:
-        '<div class="simplebox">' +
-            '<h2 class="simplebox-title">Title</h2>' +
-            '<div class="simplebox-content"><p>Content...</p></div>' +
-        '</div>',
+        requiredContent: '(wk-button)',
+        template: '<a class="wk-button" href="#">Call to Action</a>',
         upcast: function(element) {
-          return element.name == 'div' && element.hasClass( 'simplebox');
-        }
+          return (element.name === 'a' || element.name === 'button') &&
+            element.hasClass('wk-button');
+        },
       });
     },
   });

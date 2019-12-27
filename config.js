@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config ) {
     //
     'wk_button',
 //    'icomoon',
-//    'call_to_action',
+    'call_to_action',
   ];
 
   config.extraPlugins = pluginsArray.join(",");
