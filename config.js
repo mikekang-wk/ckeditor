@@ -33,10 +33,9 @@ CKEDITOR.editorConfig = function( config ) {
     'removeformat',
     'lineutils',
     'widgetselection',
-    //
     'wk_button',
 //    'icomoon',
-    'call_to_action',
+//    'call_to_action',
   ];
 
   config.extraPlugins = pluginsArray.join(",");

@@ -5,22 +5,21 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/wk_button.js');
 
-      CKEDITOR.dtd.$editable['a'] = 1;
-      CKEDITOR.dtd.$editable['button'] = 1;
-
       editor.widgets.add('wk_button', {
-        button: 'Create a call to action',
+        button: 'Create a Call to Action',
         data: function() {
           const el = this.element.$;
+
           const action = this.data.action;
           const appearance = this.data.appearance;
           const reference = this.data.reference;
+          const text = this.data.text;
 
-          function makeLink(){
+          function makeLink() {
             el.setAttribute('href', reference);
           }
 
-          function makeLinkTab(){
+          function makeLinkTab() {
             el.setAttribute('href', reference);
             el.setAttribute('target', '_blank');
           }
@@ -29,7 +28,7 @@
             el.classList.add('button-marketo-event');
             el.setAttribute('data-target', '#wk_modal');
             el.setAttribute('data-toggle', 'modal');
-            el.setAttribute('data-node-id', reference);
+            el.setAttribute('data-form-nid', reference);
           }
 
           function makeWistiaButton() {
@@ -41,7 +40,7 @@
           }
 
           function hardReset () {
-            el.className = 'wk-button cke_widget_editable cke_widget_element';
+            el.className = 'wk-cke-button cke_widget_editable cke_widget_element';
 
             el.removeAttribute('data-target');
             el.removeAttribute('data-toggle');
@@ -59,16 +58,16 @@
 
             switch (action) {
               case 'link':
-                cta = makeLink();
+                makeLink();
                 break;
               case 'link-tab':
-                cta = makeLinkTab();
+                makeLinkTab();
                 break;
               case 'form':
-                cta = makeMarketoButton();
+                makeMarketoButton();
                 break;
               case 'video':
-                cta = makeWistiaButton();
+                makeWistiaButton();
                 break;
               default:
                 break;
@@ -104,6 +103,11 @@
           if (reference) {
             el.setAttribute('data-wk-button-reference', reference);
           }
+
+          if (text) {
+            el.setAttribute('data-wk-button-text', text);
+            el.textContent = text;
+          }
         },
         dialog: 'wk_button',
         editables: {
@@ -116,6 +120,7 @@
           const action = el.getAttribute('data-wk-button-action');
           const appearance = el.getAttribute('data-wk-button-appearance');
           const reference = el.getAttribute('data-wk-button-reference');
+          const text = el.getAttribute('data-wk-button-text');
 
           if (action) {
             this.setData('action', action);
@@ -128,12 +133,16 @@
           if (reference) {
             this.setData('reference', reference);
           }
+
+          if (text) {
+            this.setData('text', text);
+          }
         },
-        requiredContent: '(wk-button)',
-        template: '<a class="wk-button" href="#">Call to Action</a>',
+        requiredContent: '(wk-cke-button)',
+        template: '<a class="wk-cke-button" href="#"></a>',
         upcast: function(element) {
           return (element.name === 'a' || element.name === 'button') &&
-            element.hasClass('wk-button');
+            element.hasClass('wk-cke-button');
         },
       });
     },

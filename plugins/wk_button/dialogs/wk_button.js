@@ -56,6 +56,17 @@ CKEDITOR.dialog.add( 'wk_button', function(editor) {
               widget.setData('reference', this.getValue());
           }
         },
+        {
+          id: 'text',
+          type: 'text',
+          label: 'Text',
+          setup: function(widget) {
+              this.setValue(widget.data.text || 'Learn More');
+          },
+          commit: function(widget) {
+              widget.setData('text', this.getValue());
+          }
+        },
       ]
     }],
   };
