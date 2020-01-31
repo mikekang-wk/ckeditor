@@ -1,9 +1,9 @@
-﻿(function () {
+﻿(function() {
   CKEDITOR.plugins.add('wk_button', {
     requires: 'widget',
     icons: 'wk_button',
     init: function(editor) {
-      CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/wk_button.js');
+      CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/dialog.js');
 
       editor.widgets.add('wk_button', {
         button: 'Create a Call to Action',
@@ -54,7 +54,7 @@
           hardReset();
 
           if (action) {
-            el.setAttribute('data-wk-button-action', action);
+            el.setAttribute('data-wk-cke-button-action', action);
 
             switch (action) {
               case 'link':
@@ -75,7 +75,7 @@
           }
 
           if (appearance) {
-            el.setAttribute('data-wk-button-appearance', appearance);
+            el.setAttribute('data-wk-cke-button-appearance', appearance);
 
             switch (appearance) {
               case 'link-arrow':
@@ -101,26 +101,21 @@
           }
 
           if (reference) {
-            el.setAttribute('data-wk-button-reference', reference);
+            el.setAttribute('data-wk-cke-button-reference', reference);
           }
 
           if (text) {
-            el.setAttribute('data-wk-button-text', text);
+            el.setAttribute('data-wk-cke-button-text', text);
             el.textContent = text;
           }
         },
         dialog: 'wk_button',
-        editables: {
-          content: {
-            selector: '.wk-button'
-          }
-        },
         init: function() {
           const el = this.element;
-          const action = el.getAttribute('data-wk-button-action');
-          const appearance = el.getAttribute('data-wk-button-appearance');
-          const reference = el.getAttribute('data-wk-button-reference');
-          const text = el.getAttribute('data-wk-button-text');
+          const action = el.getAttribute('data-wk-cke-button-action');
+          const appearance = el.getAttribute('data-wk-cke-button-appearance');
+          const reference = el.getAttribute('data-wk-cke-button-reference');
+          const text = el.getAttribute('data-wk-cke-button-text');
 
           if (action) {
             this.setData('action', action);

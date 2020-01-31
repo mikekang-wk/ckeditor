@@ -1,0 +1,24 @@
+.cke-dialog-icomoon-list {
+  columns: 2;
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0 0;
+}
+
+.cke-dialog-icomoon-list li {
+  align-items: center;
+  display: flex;
+  margin: 0 0 1em;
+  padding :0;
+}
+
+.cke-dialog-icomoon-list li .wk-cke-icon {
+  font-size: 1.75em;
+  margin: 0 .5em;
+}
+
+.cke-dialog-icomoon-list li label {
+  align-items: center;
+  display: flex;
+  margin: 0;
+}

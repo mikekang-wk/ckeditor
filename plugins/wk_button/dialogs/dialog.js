@@ -1,4 +1,4 @@
-CKEDITOR.dialog.add( 'wk_button', function(editor) {
+CKEDITOR.dialog.add('wk_button', function(editor) {
   var config = editor.config;
   var dialog;
 
