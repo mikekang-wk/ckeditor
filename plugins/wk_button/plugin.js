@@ -1,11 +1,13 @@
 ﻿(function() {
-  CKEDITOR.plugins.add('wk_button', {
-    requires: 'widget',
-    icons: 'wk_button',
-    init: function(editor) {
-      CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/dialog.js');
+  const wk_plugin_name = 'wk_button';
 
-      editor.widgets.add('wk_button', {
+  CKEDITOR.plugins.add(wk_plugin_name, {
+    requires: 'widget',
+    icons: wk_plugin_name,
+    init: function(editor) {
+      CKEDITOR.dialog.add(wk_plugin_name, this.path + 'dialogs/dialog.js');
+
+      editor.widgets.add(wk_plugin_name, {
         button: 'Create a Call to Action',
         data: function() {
           const el = this.element.$;
@@ -109,7 +111,7 @@
             el.textContent = text;
           }
         },
-        dialog: 'wk_button',
+        dialog: wk_plugin_name,
         init: function() {
           const el = this.element;
           const action = el.getAttribute('data-wk-cke-button-action');

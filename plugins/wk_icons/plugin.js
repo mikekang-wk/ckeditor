@@ -98,52 +98,17 @@
         head.append(style);
       }
 
-      editor.presetSelection = function(iconName) {
-        var el = document.querySelector('input[id="' + iconName + '"]');
-
-        if (el) {
-          el.checked = true;
-        }
-      }
-
-      editor.resetSelection = function() {
-        var inputs = editor.iconChoicesList.querySelectorAll('input[name="icon"]');
-
-        for (let i = 0; i < inputs.length; i += 1) {
-          if (i === 0) {
-            inputs[i].checked = true;
-          } else {
-            inputs[i].checked = false;
-          }
-        }
-      }
-
-      editor.clearFilterText = function(el) {
-        el.value = '';
-        editor.showAllIcons('');
-      };
-
-      editor.showAllIcons = function() {
-        var icons = editor.iconChoicesList.querySelectorAll('i');
-
-        for (let i = 0; i < icons.length; i += 1) {
-          const item = icons[i].closest('li');
-
-          item.setAttribute("style", "display: flex;");
-        }
-      };
-
       function filterIcons(text) {
         var re = new RegExp(text, 'ig');
-        var icons = editor.iconChoicesList.querySelectorAll('i');
+        var icons = document.querySelectorAll('.wk-cke-icon-list i');
 
         for (let i = 0; i < icons.length; i += 1) {
           const classString = icons[i].getAttribute('class');
-          const item = icons[i].closest('li');
+          const item = icons[i].closest('td');
 
           if (item) {
             if (classString.match(re)) {
-              item.setAttribute("style", "display: flex;");
+              item.setAttribute("style", "display: block;");
             } else {
               item.setAttribute("style", "display: none;");
             }
@@ -151,61 +116,21 @@
         }
       }
 
-      function getIconChoicesList(icons) {
-        var list = document.createElement('ul');
+      function makeIconOption(icon) {
+        var option = [];
 
-        function makeIcon(iconName) {
-          var el = document.createElement('i');
+        var iconName = icon.properties.name;
+        var iconClass = 'icon-' + iconName;
 
-          el.className = 'wk-cke-icon icon-' + iconName;
+        var label = '<i class="icon-' + iconName + '"></i> ';
 
-          return el;
-        }
+        label += iconClass;
 
-        function makeLi(iconName, index) {
-          var li = document.createElement('li');
-          var label = document.createElement('label');
-          var input = document.createElement('input');
-          var icon = makeIcon(iconName);
-          var inputId = 'icon-' + iconName;
+        option.push(label);
+        option.push(iconClass);
 
-          input.setAttribute('type', 'radio');
-          input.setAttribute('name', 'icon');
-          input.setAttribute('id', inputId);
-
-          label.setAttribute('for', inputId);
-          label.appendChild(icon);
-          label.appendChild(document.createTextNode('icon-' + iconName));
-
-          li.appendChild(input);
-          li.appendChild(label);
-
-          return li;
-        }
-
-        for (var i = 0, len = icons.length; i < len; i += 1) {
-          (function(index){
-            var iconName = icons[index].properties.name.split(',')[0].replace(/\s/g, '-').trim();
-
-            list.appendChild(makeLi(iconName, index));
-          })(i);
-        }
-
-        list.setAttribute('id', 'cke-dialog-icomoon-list');
-        list.classList.add('cke-dialog-icomoon-list');
-
-        return list;
+        return option;
       }
-
-      editor.getCheckedValue = function(container) {
-        var checked = container.querySelector('input[name="icon"]:checked');
-
-        if (checked) {
-          return checked.getAttribute('id');
-        }
-
-        return false;
-      };
 
       editor.handleSearchKeyEvent = function(event) {
         var text = event.target.value;
@@ -227,8 +152,17 @@
 
             icomoonIcons = response.icons;
 
-            editor.iconChoicesList = getIconChoicesList(response.icons);
+            editor.getIconOptions = function(){
+              var arr = [];
 
+              for (let i = 0, len = icomoonIcons.length; i < len; i += 1) {
+                (function(index) {
+                  arr.push(makeIconOption(icomoonIcons[index]));
+                })(i);
+              }
+
+              return arr;
+            };
           } else {
             console.log('XHR request failed');
           }

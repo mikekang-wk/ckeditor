@@ -35,6 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
     'widgetselection',
     'wk_button',
     'wk_icons',
+    'wk_builder',
 //    'icomoon',
 //    'call_to_action',
   ];

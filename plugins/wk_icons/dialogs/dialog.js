@@ -4,6 +4,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
 
   return {
     title: 'Choose Icon',
+    width: 400,
     contents: [{
       id: 'tab1',
       label: '',
@@ -30,47 +31,39 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
           },
         },
         {
+          className: 'wk-cke-filter',
           id: 'filter',
           type: 'text',
           label: 'Filter',
           setup: function() {
             var el = this.getInputElement().$;
-            var parentEl = el.parentElement;
 
-            editor.clearFilterText(el);
-            editor.showAllIcons();
+            this.setValue('');
+            this.focus();
 
-            document.addEventListener('keyup', editor.handleSearchKeyEvent);
-            parentEl.appendChild(editor.iconChoicesList);
+            el.addEventListener('keyup', editor.handleSearchKeyEvent);
           },
         },
         {
           id: 'icon',
-          type: 'text',
+          type: 'radio',
+          label: 'Choose Icon',
+          items: editor.getIconOptions(),
+
           setup: function(widget) {
             var el = this.getInputElement().$;
-            el.setAttribute('type', 'hidden');
+            var tds = el.querySelectorAll('td');
 
-            editor.resetSelection();
+            el.classList.add('wk-cke-icon-list');
 
-            var icon = widget.data.icon || '';
-
-            this.setValue(icon);
-
-            if (icon) {
-              editor.presetSelection(icon);
+            for (var i = 0; i < tds.length; i += 1) {
+              tds[i].removeAttribute('style');
             }
+
+            this.setValue(widget.data.icon || 'icon-workiva-w');
           },
           commit: function(widget) {
-            var el = this.getInputElement().$;
-            var container = el.closest('table');
-            var icon = editor.getCheckedValue(container);
-
-            el.value = icon;
-
-            if (icon) {
-              widget.setData('icon', icon);
-            }
+              widget.setData('icon', this.getValue());
           },
         },
       ]

@@ -1,24 +1,25 @@
-.cke-dialog-icomoon-list {
-  columns: 2;
-  list-style: none;
-  margin: 0;
-  padding: 1rem 0 0;
+.wk-cke-icon-list table,
+.wk-cke-icon-list tbody,
+.wk-cke-icon-list tr {
+  display: block;
+  white-space: normal;
+  width: 100%;
 }
 
-.cke-dialog-icomoon-list li {
-  align-items: center;
-  display: flex;
-  margin: 0 0 1em;
-  padding :0;
+.wk-cke-icon-list tr:after {
+  content: '';
+  display: table;
+  width: 100%;
 }
 
-.cke-dialog-icomoon-list li .wk-cke-icon {
-  font-size: 1.75em;
-  margin: 0 .5em;
+.wk-cke-icon-list td {
+  display: block;
+  float: left !important;
+  padding: .5em 0 !important;
+  width: 50% !important;
 }
 
-.cke-dialog-icomoon-list li label {
-  align-items: center;
-  display: flex;
-  margin: 0;
+.wk-cke-icon-list i {
+  font-size: 3em;
+  vertical-align: middle;
 }
