@@ -9,7 +9,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
       label: '',
       title: '',
       expand: true,
-      padding: 0,
       elements: [
         {
           id: 'action',

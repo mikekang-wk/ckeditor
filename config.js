@@ -1,19 +1,22 @@
 CKEDITOR.editorConfig = function( config ) {
   config.toolbarGroups = [
-    { name: 'document',     groups: [ 'mode', 'document', 'doctools' ] },
+    {
+      name: 'document',
+      groups: [ 'mode', 'document', 'doctools' ],
+    },
 //    { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-    { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+//    { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 //    { name: 'forms' },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+//    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+//    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
 //    { name: 'links' },
 //    { name: 'styles' },
 //    { name: 'colors' },
-    { name: 'tools' },
+//    { name: 'tools' },
     { name: 'insert' },
     { name: 'others' },
   ];
-  // Dialog windows are also simplified.
+
   config.removeDialogTabs = 'link:advanced';
   //  config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
   config.skin = 'bootstrapck';
@@ -22,22 +25,22 @@ CKEDITOR.editorConfig = function( config ) {
   config.allowedContent = true;
 
   var pluginsArray = [
+    'dialog',
     'widget',
-    'htmlwriter',
-    'autogrow',
-    'sourcearea',
-    'showblocks',
-    'find',
-    'table',
-    'pastetext',
-    'removeformat',
-    'lineutils',
     'widgetselection',
+    'sourcearea',
+    'htmlwriter',
+    'showblocks',
+//    'autogrow',
+//    'find',
+//    'table',
+//    'pastetext',
+//    'removeformat',
+//    'lineutils',
     'wk_button',
     'wk_icons',
-    'wk_builder',
-//    'icomoon',
-//    'call_to_action',
+    'wk_two_column_builder',
+    'wk_three_column_builder',
   ];
 
   config.extraPlugins = pluginsArray.join(",");

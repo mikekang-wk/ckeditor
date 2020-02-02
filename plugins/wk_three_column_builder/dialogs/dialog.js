@@ -1,9 +1,9 @@
-CKEDITOR.dialog.add('wk_builder', function(editor) {
+CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
   var config = editor.config;
   var dialog;
 
   return {
-    title: 'Choose Icon',
+    title: 'Edit Three Column Grid',
     contents: [{
       id: 'tab1',
       label: '',
@@ -12,29 +12,17 @@ CKEDITOR.dialog.add('wk_builder', function(editor) {
       padding: 0,
       elements: [
         {
-          id: 'layout',
-          type: 'radio',
-          label: 'Choose Layout',
-          items: editor.populateLayoutOptions(),
-          setup: function(widget) {
-            this.setValue(widget.data.layout || 'a-a-a');
-          },
-          commit: function(widget) {
-              widget.setData('layout', this.getValue());
-          },
-        },
-        {
           id: 'spacing',
           type: 'select',
-          label: 'Set Spacing',
+          label: 'Add Spacing',
           items: [
             ['None', 'none'],
-            ['Above', 'both'],
-            ['Below', 'top'],
-            ['Above and Below', 'bottom'],
+            ['Above', 'above'],
+            ['Below', 'below'],
+            ['Above and Below', 'both'],
           ],
           setup: function(widget) {
-            this.setValue(widget.data.layout || 'none');
+            this.setValue(widget.data.spacing || 'none');
           },
           commit: function(widget) {
               widget.setData('spacing', this.getValue());
@@ -43,13 +31,13 @@ CKEDITOR.dialog.add('wk_builder', function(editor) {
         {
           id: 'alignment',
           type: 'select',
-          label: 'Set Alignment',
+          label: 'Vertical Alignment',
           items: [
             ['Top', 'top'],
             ['Center', 'center'],
           ],
           setup: function(widget) {
-            this.setValue(widget.data.layout || 'top');
+            this.setValue(widget.data.alignment || 'top');
           },
           commit: function(widget) {
               widget.setData('alignment', this.getValue());

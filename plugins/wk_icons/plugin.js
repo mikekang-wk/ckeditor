@@ -8,36 +8,22 @@
       var icomoonIcons;
 
       editor.widgets.add('wk_icons', {
-        button: 'Add an icon',
-        data: function() {
-          const el = this.element;
-          const iconName = this.data.icon || '';
-          const iconSize = this.data.size || '';
-
-          const classes = [
-            iconName,
-            iconSize,
-          ];
-
-          el.$.className = classes.join(' ');
-        },
+        button: 'Icons',
         dialog: 'wk_icons',
+        editables: {},
+        template: '<i class="wk-cke-icon">i</i>',
+        requiredContent: 'i(!wk-cke-icon)',
+        upcast: function(element) {
+          return (
+            element.name === 'i' &&
+            element.hasClass('wk-cke-icon')
+          );
+        },
         init: function() {
           const el = this.element;
-          const classList = el.$.classList;
 
-          let iconName = '';
-          let iconSize = '';
-
-          for (let i = 0; i < classList.length; i += 1){
-            if (classList[i].indexOf('icon-') !== -1) {
-              iconName = classList[i];
-            }
-
-            if (classList[i].indexOf('font-size-') !== -1) {
-              iconSize = classList[i];
-            }
-          }
+          const iconName = el.getAttribute('data-icon-name');
+          const iconSize = el.getAttribute('data-icon-size');
 
           if (iconName) {
             this.setData('icon', iconName);
@@ -47,25 +33,33 @@
             this.setData('size', iconSize);
           }
         },
-        template: '<i class="">i</i>',
-        upcast: function(element) {
-          if (element.name !== 'i') {
-            return false;
+        data: function() {
+          const el = this.element;
+          const iconName = this.data.icon || '';
+          const iconSize = this.data.size || '';
+          const className = el.getAttribute('class');
+
+          let ckeClasses;
+
+          if (className) {
+            ckeClasses = className.split(' ');
           }
 
-          let returnValue = false;
-
-          for (let i = 0, len = icomoonIcons.length; i < len; i += 1) {
-            (function(index) {
-              var iconClass = 'icon-' + icomoonIcons[index].properties.name;
-
-              if (element.hasClass(iconClass)) {
-                returnValue = true;
-              }
-            })(i);
+          for (var i = 0; i < ckeClasses.length; i += 1) {
+            if (ckeClasses[i] !== 'wk-cke-icon') {
+             el.removeClass(ckeClasses[i]);
+            }
           }
 
-          return returnValue;
+          if (iconName) {
+            el.data('icon-name', iconName);
+            el.addClass(iconName);
+          }
+
+          if (iconSize) {
+            el.data('icon-size', iconSize);
+            el.addClass(iconSize);
+          }
         },
       });
 

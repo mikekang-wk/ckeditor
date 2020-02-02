@@ -39,8 +39,8 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
             var el = this.getInputElement().$;
 
             this.setValue('');
-            this.focus();
 
+            el.focus();
             el.addEventListener('keyup', editor.handleSearchKeyEvent);
           },
         },
