@@ -37,6 +37,7 @@ CKEDITOR.editorConfig = function( config ) {
 //    'pastetext',
 //    'removeformat',
 //    'lineutils',
+//    'wk_tables',
     'wk_button',
     'wk_icons',
     'wk_two_column_builder',
