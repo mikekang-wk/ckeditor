@@ -1,0 +1,25 @@
+.wk-cke-icon-list table,
+.wk-cke-icon-list tbody,
+.wk-cke-icon-list tr {
+  display: block;
+  white-space: normal;
+  width: 100%;
+}
+
+.wk-cke-icon-list tr:after {
+  content: '';
+  display: table;
+  width: 100%;
+}
+
+.wk-cke-icon-list td {
+  display: block;
+  float: left !important;
+  padding: .5em 0 !important;
+  width: 50% !important;
+}
+
+.wk-cke-icon-list i {
+  font-size: 3em;
+  vertical-align: middle;
+}
