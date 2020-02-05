@@ -16,7 +16,7 @@
             selector: '.card-body',
           },
         },
-        template: '<div data-js-fade-in-on-scroll class="card teaser wk-cke-card-with-image">' +
+        template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card-with-image">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-image">' +
               '<img src="' + this.path + 'img/placeholder.jpg" alt="Image alt..." />' +

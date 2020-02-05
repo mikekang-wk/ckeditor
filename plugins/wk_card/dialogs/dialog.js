@@ -21,7 +21,7 @@ CKEDITOR.dialog.add('wk_card', function(editor) {
           type: 'checkbox',
           label: 'Shadow',
           setup: function(widget) {
-              this.setValue(widget.data.shadow);
+            this.setValue(widget.data.shadow);
           },
           commit: function(widget) {
               widget.setData('shadow', this.getValue());

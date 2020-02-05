@@ -13,7 +13,7 @@
             selector: '.card-body',
           },
         },
-        template: '<div data-js-fade-in-on-scroll class="card teaser wk-cke-card">' +
+        template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-body">' +
               '<p>Content...</p>' +
@@ -42,12 +42,15 @@
           const shadow = this.data.shadow;
           const className = 'noshadow';
 
-          el.data('shadow', shadow);
           el.removeClass(className);
 
-          if (!shadow) {
+          if (shadow === false) {
             el.addClass(className);
+            el.data('shadow', false);
+          } else {
+            el.data('shadow', true);
           }
+
         },
       });
     },
