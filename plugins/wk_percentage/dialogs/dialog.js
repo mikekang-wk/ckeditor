@@ -1,9 +1,22 @@
 CKEDITOR.dialog.add('wk_percentage', function(editor) {
   var config = editor.config;
-  var dialog;
+  var imgPath = CKEDITOR.plugins.getPath('wk_percentage') + 'img/';
+
+  function populatePercentageOptions() {
+    var options = [];
+
+    for (var i = 0; i < 101; i +=1) {
+      (function(index){
+        var option = [i, i];
+
+        options.push(option);
+      })(i);
+    }
+    return options;
+  }
 
   return {
-    title: 'Edit Percentage',
+    title: 'Edit',
     width: 400,
     contents: [{
       id: 'tab1',
@@ -13,10 +26,14 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
       padding: 0,
       elements: [
         {
+          type: 'html',
+          html: '<img class="wk-cke-dialog-image" src="' + imgPath + 'percentage.jpg" />'
+        },
+        {
           id: 'percentage',
           type: 'select',
           label: 'Percentage',
-          items: editor.wk_populatePercentageOptions(),
+          items: populatePercentageOptions(),
           setup: function(widget) {
               document.getElementById(this.domId).focus();
               this.setValue(widget.data.percentage || 0);

@@ -1,9 +1,9 @@
 CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
   var config = editor.config;
-  var dialog;
+  var imgPath = CKEDITOR.plugins.getPath('wk_three_column_builder') + 'img/';
 
   return {
-    title: 'Edit Three Column Grid',
+    title: 'Edit',
     contents: [{
       id: 'tab1',
       label: '',
@@ -11,6 +11,10 @@ CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
       title: '',
       padding: 0,
       elements: [
+        {
+          type: 'html',
+          html: '<img class="wk-cke-dialog-image" src="' + imgPath + 'three-columns.jpg" />'
+        },
         {
           id: 'spacing',
           type: 'select',

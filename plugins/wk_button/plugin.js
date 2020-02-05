@@ -6,7 +6,7 @@
       CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/dialog.js');
 
       editor.widgets.add('wk_button', {
-        button: 'Call to Actions',
+        button: 'Call to Action',
         editables: {},
         requiredContent: '(wk-cke-button)',
         template: '<a class="wk-cke-button" href="#"></a>',

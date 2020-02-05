@@ -1,15 +1,43 @@
 CKEDITOR.dialog.add('wk_button', function(editor) {
   var config = editor.config;
-  var dialog;
+  var imgPath = CKEDITOR.plugins.getPath('wk_button') + 'img/';
+
+  function getActionOptions(){
+    var linkArrowPath = imgPath + 'link-arrow.jpg';
+    var primaryButtonPath = imgPath + 'primary-button.jpg';
+    var secondaryButtonPath = imgPath + 'secondary-button.jpg';
+    var tertiaryButtonPath = imgPath + 'tertiary-button.jpg';
+
+    var arr = [
+      ['<img src="' + linkArrowPath + '" title="link-arrow" />', 'link-arrow'],
+      ['<img src="' + primaryButtonPath + '" title="primary-button" />', 'primary'],
+      ['<img src="' + secondaryButtonPath + '" title="secondary-button" />', 'secondary'],
+      ['<img src="' + tertiaryButtonPath + '" title="tertiary-button" />', 'tertiary'],
+    ];
+
+    return arr;
+  }
 
   return {
-    title: 'Edit Call to Action',
+    title: 'Edit',
     contents: [ {
       id: 'tab1',
       label: '',
       title: '',
       expand: true,
       elements: [
+        {
+          id: 'appearance',
+          type: 'radio',
+          label: 'Appearance',
+          items: getActionOptions(),
+          setup: function(widget) {
+              this.setValue(widget.data.appearance || 'link-arrow');
+          },
+          commit: function(widget) {
+              widget.setData('appearance', this.getValue());
+          }
+        },
         {
           id: 'action',
           type: 'select',
@@ -26,23 +54,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           commit: function(widget) {
               widget.setData('action', this.getValue());
           },
-        },
-        {
-          id: 'appearance',
-          type: 'select',
-          label: 'Appearance',
-          items: [
-            ['Link Arrow', 'link-arrow'],
-            ['Primary Button', 'primary'],
-            ['Secondary Button', 'secondary'],
-            ['Tertiary Button', 'tertiary'],
-          ],
-          setup: function(widget) {
-              this.setValue(widget.data.appearance || 'link-arrow');
-          },
-          commit: function(widget) {
-              widget.setData('appearance', this.getValue());
-          }
         },
         {
           id: 'reference',

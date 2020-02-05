@@ -5,23 +5,8 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_percentage', this.path + 'dialogs/dialog.js');
 
-      var icomoonIcons;
-
-      editor.wk_populatePercentageOptions = function() {
-        var options = [];
-
-        for (var i = 0; i < 101; i +=1) {
-          (function(index){
-            var option = [i, i];
-
-            options.push(option);
-          })(i);
-        }
-        return options;
-      }
-
       editor.widgets.add('wk_percentage', {
-        button: 'Cards',
+        button: 'Animated Percentage',
         dialog: 'wk_percentage',
         template: '<div data-js-animated-percentage class="wk-cke-percentage-animation percentage-animation">' +
                     '70' +

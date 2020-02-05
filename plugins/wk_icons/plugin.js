@@ -8,7 +8,7 @@
       var icomoonIcons;
 
       editor.widgets.add('wk_icons', {
-        button: 'Icons',
+        button: 'Icon',
         dialog: 'wk_icons',
         editables: {},
         template: '<i class="wk-cke-icon">i</i>',
@@ -92,24 +92,6 @@
         head.append(style);
       }
 
-      function filterIcons(text) {
-        var re = new RegExp(text, 'ig');
-        var icons = document.querySelectorAll('.wk-cke-icon-list i');
-
-        for (let i = 0; i < icons.length; i += 1) {
-          const classString = icons[i].getAttribute('class');
-          const item = icons[i].closest('td');
-
-          if (item) {
-            if (classString.match(re)) {
-              item.setAttribute("style", "display: block;");
-            } else {
-              item.setAttribute("style", "display: none;");
-            }
-          }
-        }
-      }
-
       function makeIconOption(icon) {
         var option = [];
 
@@ -125,12 +107,6 @@
 
         return option;
       }
-
-      editor.handleSearchKeyEvent = function(event) {
-        var text = event.target.value;
-
-        filterIcons(text);
-      };
 
       addCSS('https://d1azc1qln24ryf.cloudfront.net/49134/WorkivaUI/style-cf.css');
 

@@ -2,8 +2,32 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   var config = editor.config;
   var dialog;
 
+  function filterIcons(text) {
+    var re = new RegExp(text, 'ig');
+    var icons = document.querySelectorAll('.wk-cke-icon-list i');
+
+    for (let i = 0; i < icons.length; i += 1) {
+      const classString = icons[i].getAttribute('class');
+      const item = icons[i].closest('td');
+
+      if (item) {
+        if (classString.match(re)) {
+          item.setAttribute("style", "display: block;");
+        } else {
+          item.setAttribute("style", "display: none;");
+        }
+      }
+    }
+  }
+
+  function handleSearchKeyEvent(event) {
+    var text = event.target.value;
+
+    filterIcons(text);
+  };
+
   return {
-    title: 'Choose Icon',
+    title: 'Edit',
     width: 400,
     contents: [{
       id: 'tab1',
@@ -41,7 +65,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
             this.setValue('');
 
             el.focus();
-            el.addEventListener('keyup', editor.handleSearchKeyEvent);
+            el.addEventListener('keyup', handleSearchKeyEvent);
           },
         },
         {
