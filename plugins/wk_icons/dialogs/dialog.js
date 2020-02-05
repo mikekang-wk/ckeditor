@@ -2,19 +2,46 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   var config = editor.config;
   var dialog;
 
+  function makeIconOption(icon) {
+    var option = [];
+    var iconName = icon.properties.name;
+    var iconClass = 'icon-' + iconName;
+    var label = '<i class="icon-' + iconName + '"></i> ';
+
+    label += iconClass;
+
+    option.push(label);
+    option.push(iconClass);
+
+    return option;
+  }
+
+  function getIcomoonOptions(){
+    var arr = [];
+    var icons = editor.wkIcomoonIcons;
+
+    for (let i = 0, len = icons.length; i < len; i += 1) {
+      (function(index) {
+        arr.push(makeIconOption(icons[index]));
+      })(i);
+    }
+
+    return arr;
+  }
+
   function filterIcons(text) {
     var re = new RegExp(text, 'ig');
     var icons = document.querySelectorAll('.wk-cke-icon-list i');
 
     for (let i = 0; i < icons.length; i += 1) {
       const classString = icons[i].getAttribute('class');
-      const item = icons[i].closest('td');
+      const td = icons[i].parentElement.parentElement;
 
-      if (item) {
+      if (td) {
         if (classString.match(re)) {
-          item.setAttribute("style", "display: block;");
+          td.setAttribute("style", "display: block;");
         } else {
-          item.setAttribute("style", "display: none;");
+          td.setAttribute("style", "display: none;");
         }
       }
     }
@@ -72,7 +99,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
           id: 'icon',
           type: 'radio',
           label: 'Choose Icon',
-          items: editor.getIconOptions(),
+          items: getIcomoonOptions(),
 
           setup: function(widget) {
             var el = this.getInputElement().$;

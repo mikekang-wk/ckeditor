@@ -1,0 +1,25 @@
+.cke_dialog .wk-cke-icon-list table,
+.cke_dialog .wk-cke-icon-list tbody,
+.cke_dialog .wk-cke-icon-list tr {
+  display: block;
+  white-space: normal;
+  width: 100%;
+}
+
+.cke_dialog .wk-cke-icon-list tr:after {
+  content: '';
+  display: table;
+  width: 100%;
+}
+
+.cke_dialog .wk-cke-icon-list td {
+  display: block;
+  float: left !important;
+  padding: .5em 0;
+  width: 50%;
+}
+
+.cke_dialog .wk-cke-icon-list i {
+  font-size: 3em;
+  vertical-align: middle;
+}

@@ -5,8 +5,6 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_icons', this.path + 'dialogs/dialog.js');
 
-      var icomoonIcons;
-
       editor.widgets.add('wk_icons', {
         button: 'Icon',
         dialog: 'wk_icons',
@@ -63,55 +61,6 @@
         },
       });
 
-      // '.closest()' polyfill
-      if (!Element.prototype.matches) {
-        Element.prototype.matches = Element.prototype.msMatchesSelector ||
-          Element.prototype.webkitMatchesSelector;
-      }
-
-      if (!Element.prototype.closest) {
-        Element.prototype.closest = function(s) {
-          var el = this;
-
-          do {
-            if (el.matches(s)) return el;
-            el = el.parentElement || el.parentNode;
-          } while (el !== null && el.nodeType === 1);
-          return null;
-        };
-      }
-
-      function addCSS(filename){
-        var head = document.getElementsByTagName('head')[0];
-        var style = document.createElement('link');
-
-        style.href = filename;
-        style.type = 'text/css';
-        style.rel = 'stylesheet';
-
-        head.append(style);
-      }
-
-      function makeIconOption(icon) {
-        var option = [];
-
-        var iconName = icon.properties.name;
-        var iconClass = 'icon-' + iconName;
-
-        var label = '<i class="icon-' + iconName + '"></i> ';
-
-        label += iconClass;
-
-        option.push(label);
-        option.push(iconClass);
-
-        return option;
-      }
-
-      addCSS('https://d1azc1qln24ryf.cloudfront.net/49134/WorkivaUI/style-cf.css');
-
-      addCSS(this.path + 'css/styles.css');
-
       var icomoonAJAX = (function(){
         var endpoint = 'https://i.icomoon.io/public/a5dc34c96c/WorkivaUI/selection.json';
 
@@ -120,19 +69,7 @@
           if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
 
-            icomoonIcons = response.icons;
-
-            editor.getIconOptions = function(){
-              var arr = [];
-
-              for (let i = 0, len = icomoonIcons.length; i < len; i += 1) {
-                (function(index) {
-                  arr.push(makeIconOption(icomoonIcons[index]));
-                })(i);
-              }
-
-              return arr;
-            };
+            editor.wkIcomoonIcons = response.icons;
           } else {
             console.log('XHR request failed');
           }
