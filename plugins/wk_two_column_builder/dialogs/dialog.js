@@ -3,13 +3,12 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
   var imgPath = CKEDITOR.plugins.getPath('wk_two_column_builder') + 'img/';
 
   return {
-    title: 'Edit',
+    title: 'Edit Two Column Builder',
     contents: [{
       id: 'tab1',
       label: '',
       expand: true,
       title: '',
-      padding: 0,
       elements: [
         {
           type: 'html',

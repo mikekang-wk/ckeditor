@@ -16,14 +16,11 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
   }
 
   return {
-    title: 'Edit',
+    title: 'Edit Animated Percentage',
     width: 400,
     contents: [{
       id: 'tab1',
-      label: '',
       expand: true,
-      title: '',
-      padding: 0,
       elements: [
         {
           type: 'html',

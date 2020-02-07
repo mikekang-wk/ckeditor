@@ -2,6 +2,19 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   var config = editor.config;
   var dialog;
 
+  function getColorOptions() {
+    var options = [
+      ['Primary', '#0094ff'],
+      ['Secondary', '#66cc00'],
+      ['White', '#ffffff'],
+      ['Gray Dark', '#333333'],
+      ['Gray Medium', '#707070'],
+      ['Gray Light', '#e3e3e3'],
+    ];
+
+    return option;
+  }
+
   function makeIconOption(icon) {
     var option = [];
     var iconName = icon.properties.name;
@@ -54,14 +67,11 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   };
 
   return {
-    title: 'Edit',
+    title: 'Edit Icon',
     width: 400,
     contents: [{
       id: 'tab1',
-      label: '',
       expand: true,
-      title: '',
-      padding: 0,
       elements: [
         {
           id: 'size',

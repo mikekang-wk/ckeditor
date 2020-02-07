@@ -3,14 +3,11 @@ CKEDITOR.dialog.add('wk_card_with_image', function(editor) {
   var imgPath = CKEDITOR.plugins.getPath('wk_card_with_image') + 'img/';
 
   return {
-    title: 'Edit',
+    title: 'Edit Card with Image',
     width: 400,
     contents: [{
       id: 'tab1',
-      label: '',
       expand: true,
-      title: '',
-      padding: 0,
       elements: [
         {
             type: 'html',
