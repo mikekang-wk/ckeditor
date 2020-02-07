@@ -9,7 +9,7 @@
         button: 'Icon',
         dialog: 'wk_icons',
         editables: {},
-        template: '<i class="wk-cke-icon">i</i>',
+        template: '<i class="wk-cke-icon">&nbsp;</i>',
         requiredContent: 'i(!wk-cke-icon)',
         upcast: function(element) {
           return (

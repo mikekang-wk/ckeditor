@@ -16,6 +16,7 @@
         template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-body">' +
+              '<i class="wk-cke-icon icon-workiva-w">&nbsp;</i>' +
               '<h3>Sample Title</h3>' +
               '<p>Sample content ipsum dolor sit...</p>' +
             '</div>' +
@@ -47,10 +48,9 @@
 
           if (shadow === 'false') {
             el.addClass(className);
-            el.data('shadow', 'false');
-          } else {
-            el.data('shadow', 'true');
           }
+
+          el.data('shadow', shadow);
         },
       });
     },

@@ -19,7 +19,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
   }
 
   return {
-    title: 'Edit Call to Action',
+    title: 'Call to Action Options',
     contents: [ {
       id: 'tab1',
       expand: true,

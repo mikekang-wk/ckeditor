@@ -1,16 +1,16 @@
-CKEDITOR.dialog.add('wk_card_with_image', function(editor) {
+CKEDITOR.dialog.add('wk_teaser', function(editor) {
   var config = editor.config;
-  var imgPath = CKEDITOR.plugins.getPath('wk_card_with_image') + 'img/';
+  var imgPath = CKEDITOR.plugins.getPath('wk_teaser') + 'img/';
 
-  function getShadowOptions(){
+  function getTypeOptions(){
     var options = [
       [
         '<img class="wk-cke-dialog-image" src="' + imgPath + 'card-with-image.jpg" />',
-        'true'
+        'vertical'
       ],
       [
         '<img class="wk-cke-dialog-image" src="' + imgPath + 'card-with-image-horizontal.jpg" />',
-        'false'
+        'horizontal'
       ],
     ];
 
@@ -18,23 +18,23 @@ CKEDITOR.dialog.add('wk_card_with_image', function(editor) {
   }
 
   return {
-    title: 'Edit Card with Image',
+    title: 'Teaser Options',
     width: 400,
     contents: [{
       id: 'tab1',
       expand: true,
       elements: [
         {
-          id: 'shadow',
+          id: 'type',
           className: 'wk-display-block',
           type: 'radio',
           label: 'Card Type',
-          items: getShadowOptions(),
+          items: getTypeOptions(),
           setup: function(widget) {
-            this.setValue(widget.data.shadow);
+            this.setValue(widget.data.type);
           },
           commit: function(widget) {
-              widget.setData('shadow', this.getValue());
+              widget.setData('type', this.getValue());
           },
         },
       ]

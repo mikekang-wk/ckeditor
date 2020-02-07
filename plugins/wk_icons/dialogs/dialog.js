@@ -80,7 +80,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   };
 
   return {
-    title: 'Edit Icon',
+    title: 'Icon Options',
     width: 400,
     contents: [{
       id: 'tab1',

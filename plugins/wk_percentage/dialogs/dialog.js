@@ -16,7 +16,7 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
   }
 
   return {
-    title: 'Edit Animated Percentage',
+    title: 'Animated Percentage Options',
     width: 400,
     contents: [{
       id: 'tab1',
@@ -26,13 +26,13 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
           type: 'html',
           html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
                 '<div>' +
-                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'percentage.jpg" />' +
+                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'animated-percentage.gif" />' +
                 '</div>'
         },
         {
           id: 'percentage',
           type: 'select',
-          label: 'Choose Percentage',
+          label: 'Percentage',
           items: populatePercentageOptions(),
           setup: function(widget) {
               document.getElementById(this.domId).focus();

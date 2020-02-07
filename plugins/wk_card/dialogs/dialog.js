@@ -18,7 +18,7 @@ CKEDITOR.dialog.add('wk_card', function(editor) {
   }
 
   return {
-    title: 'Edit Card',
+    title: 'Card Options',
     width: 400,
     contents: [{
       id: 'tab1',

@@ -18,7 +18,7 @@ CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
         {
           id: 'spacing',
           type: 'select',
-          label: 'Add Spacing',
+          label: 'Spacing',
           items: [
             ['None', 'none'],
             ['Above', 'above'],

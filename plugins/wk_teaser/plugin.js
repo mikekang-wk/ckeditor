@@ -1,13 +1,13 @@
 ﻿(function() {
-  CKEDITOR.plugins.add('wk_card_with_image', {
+  CKEDITOR.plugins.add('wk_teaser', {
     requires: 'widget',
-    icons: 'wk_card_with_image',
+    icons: 'wk_teaser',
     init: function(editor) {
-      CKEDITOR.dialog.add('wk_card_with_image', this.path + 'dialogs/dialog.js');
+      CKEDITOR.dialog.add('wk_teaser', this.path + 'dialogs/dialog.js');
 
-      editor.widgets.add('wk_card_with_image', {
-        button: 'Card with Image',
-        dialog: 'wk_card_with_image',
+      editor.widgets.add('wk_teaser', {
+        button: 'Teaser',
+        dialog: 'wk_teaser',
         editables: {
           image: {
             selector: '.card-image',
@@ -16,7 +16,7 @@
             selector: '.card-body',
           },
         },
-        template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card-with-image">' +
+        template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-teaser">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-image">' +
               '<img src="' + this.path + 'img/sample-content-thumbnail-16-9.jpg" alt="Image alt..." />' +
@@ -27,36 +27,35 @@
             '</div>' +
           '</div>' +
         '</div>',
-        requiredContent: 'div(!wk-cke-card-with-image)',
+        requiredContent: 'div(!wk-cke-teaser)',
         upcast: function(element) {
           return (
             element.name === 'div' &&
-            element.hasClass('wk-cke-card-with-image')
+            element.hasClass('wk-cke-teaser')
           );
         },
         init: function() {
           const el = this.element;
-          const shadow = el.getAttribute('data-shadow');
+          const type = el.getAttribute('data-type');
 
-          if (shadow) {
-            this.setData('shadow', shadow);
+          if (type) {
+            this.setData('type', type);
           } else {
-            this.setData('shadow', 'false');
+            this.setData('type', 'vertical');
           }
         },
         data: function() {
           const el = this.element;
-          const shadow = this.data.shadow;
-          const className = 'noshadow';
+          const type = this.data.type;
+          const className = 'teaser-horizontal';
 
           el.removeClass(className);
 
-          if (shadow === 'false') {
+          if (type === 'horizontal') {
             el.addClass(className);
-            el.data('shadow', 'false');
-          } else {
-            el.data('shadow', 'true');
           }
+
+          el.data('type', type);
         },
       });
     },
