@@ -62,10 +62,6 @@
             this.setData('alignment', 'top');
           }
 
-          if (el.hasClass('wk-cke-reverse')){
-            this.setData('reverse', true);
-          }
-
           if (
             el.hasClass('spacer-top-lg') &&
             el.hasClass('spacer-bottom-lg')
@@ -87,13 +83,11 @@
           const ratio = this.data.ratio || 'col-col';
           const spacing = this.data.spacing || 'none';
           const alignment = this.data.alignment || 'top';
-          const reverse = this.data.reverse || false;
 
           var ckeClasses = [
             'wk-cke-ratio-6-6',
             'wk-cke-ratio-8-4',
             'wk-cke-ratio-4-8',
-            'wk-cke-reverse',
             'align-items-top',
             'align-items-center',
             'spacer-top-lg',
@@ -116,10 +110,6 @@
 
           function colFourEight() {
             el.addClass('wk-cke-ratio-4-8');
-          }
-
-          function setReverseOrder() {
-            el.addClass('wk-cke-reverse');
           }
 
           function alignTop() {
@@ -180,9 +170,6 @@
               break;
           }
 
-          if (reverse) {
-            setReverseOrder();
-          }
         },
       });
     },

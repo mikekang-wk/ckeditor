@@ -24,12 +24,15 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
       elements: [
         {
           type: 'html',
-          html: '<img class="wk-cke-dialog-image" src="' + imgPath + 'percentage.jpg" />'
+          html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
+                '<div>' +
+                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'percentage.jpg" />' +
+                '</div>'
         },
         {
           id: 'percentage',
           type: 'select',
-          label: 'Percentage',
+          label: 'Choose Percentage',
           items: populatePercentageOptions(),
           setup: function(widget) {
               document.getElementById(this.domId).focus();

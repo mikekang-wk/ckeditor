@@ -32,7 +32,7 @@
 
           if (percentage) {
             el.data('percentage', percentage);
-            el.setText(percentage);
+            el.setText(percentage + '%');
           }
         },
       });

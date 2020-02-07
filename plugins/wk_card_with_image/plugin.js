@@ -19,10 +19,11 @@
         template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card-with-image">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-image">' +
-              '<img src="' + this.path + 'img/placeholder.jpg" alt="Image alt..." />' +
+              '<img src="' + this.path + 'img/sample-content-thumbnail-16-9.jpg" alt="Image alt..." />' +
             '</div>' +
             '<div class="card-body">' +
-              '<p>Content...</p>' +
+              '<h3>Sample Title</h3>' +
+              '<p>Sample body copy ipsum dolor sit amet...</p>' +
             '</div>' +
           '</div>' +
         '</div>',
@@ -40,7 +41,7 @@
           if (shadow) {
             this.setData('shadow', shadow);
           } else {
-            this.setData('shadow', false);
+            this.setData('shadow', 'false');
           }
         },
         data: function() {
@@ -48,11 +49,13 @@
           const shadow = this.data.shadow;
           const className = 'noshadow';
 
-          el.data('shadow', shadow);
           el.removeClass(className);
 
-          if (!shadow) {
+          if (shadow === 'false') {
             el.addClass(className);
+            el.data('shadow', 'false');
+          } else {
+            el.data('shadow', 'true');
           }
         },
       });

@@ -2,6 +2,19 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   var config = editor.config;
   var dialog;
 
+
+  function getSizeOptions() {
+    var options =   [
+      ['Normal', 'font-size-normal'],
+      ['Smaller', 'font-size-smaller'],
+      ['Large', 'font-size-large'],
+      ['Larger', 'font-size-larger'],
+      ['Largest', 'font-size-largest'],
+    ];
+
+    return options;
+  }
+
   function getColorOptions() {
     var options = [
       ['Primary', '#0094ff'],
@@ -12,7 +25,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
       ['Gray Light', '#e3e3e3'],
     ];
 
-    return option;
+    return options;
   }
 
   function makeIconOption(icon) {
@@ -76,14 +89,8 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
         {
           id: 'size',
           type: 'select',
-          label: 'Icon Size',
-          items: [
-            ['Normal', 'font-size-normal'],
-            ['Smaller', 'font-size-smaller'],
-            ['Large', 'font-size-large'],
-            ['Larger', 'font-size-larger'],
-            ['Largest', 'font-size-largest'],
-          ],
+          label: 'Size',
+          items: getSizeOptions(),
           setup: function(widget) {
               this.setValue(widget.data.size || 'font-size-normal');
           },
@@ -92,10 +99,22 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
           },
         },
         {
+          id: 'color',
+          type: 'select',
+          label: 'Color',
+          items: getColorOptions(),
+          setup: function(widget) {
+              this.setValue(widget.data.color || '#333333');
+          },
+          commit: function(widget) {
+              widget.setData('color', this.getValue());
+          },
+        },
+        {
           className: 'wk-cke-filter',
           id: 'filter',
           type: 'text',
-          label: 'Filter',
+          label: 'Filter/Search',
           setup: function() {
             var el = this.getInputElement().$;
 
@@ -108,7 +127,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
         {
           id: 'icon',
           type: 'radio',
-          label: 'Choose Icon',
+          label: 'Icon',
           items: getIcomoonOptions(),
 
           setup: function(widget) {

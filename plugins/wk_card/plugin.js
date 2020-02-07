@@ -16,7 +16,8 @@
         template: '<div data-shadow="true" data-js-fade-in-on-scroll class="card teaser wk-cke-card">' +
           '<div class="teaser-wrapper">' +
             '<div class="card-body">' +
-              '<p>Content...</p>' +
+              '<h3>Sample Title</h3>' +
+              '<p>Sample content ipsum dolor sit...</p>' +
             '</div>' +
           '</div>' +
         '</div>',
@@ -34,7 +35,7 @@
           if (shadow) {
             this.setData('shadow', shadow);
           } else {
-            this.setData('shadow', false);
+            this.setData('shadow', 'false');
           }
         },
         data: function() {
@@ -44,13 +45,12 @@
 
           el.removeClass(className);
 
-          if (shadow === false) {
+          if (shadow === 'false') {
             el.addClass(className);
-            el.data('shadow', false);
+            el.data('shadow', 'false');
           } else {
-            el.data('shadow', true);
+            el.data('shadow', 'true');
           }
-
         },
       });
     },

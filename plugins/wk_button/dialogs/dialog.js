@@ -25,6 +25,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
       expand: true,
       elements: [
         {
+          className: 'wk-display-block',
           id: 'appearance',
           type: 'radio',
           label: 'Appearance',
@@ -58,7 +59,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           type: 'text',
           label: 'Reference (URL / Video ID / Marketo Node ID)',
           setup: function(widget) {
-              this.setValue(widget.data.reference || '/');
+              this.setValue(widget.data.reference || '');
           },
           commit: function(widget) {
               widget.setData('reference', this.getValue());
@@ -69,7 +70,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           type: 'text',
           label: 'Text',
           setup: function(widget) {
-              this.setValue(widget.data.text || 'Learn More');
+              this.setValue(widget.data.text || '');
           },
           commit: function(widget) {
               widget.setData('text', this.getValue());

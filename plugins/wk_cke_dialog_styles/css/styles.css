@@ -1,3 +1,15 @@
+.wk-display-block {
+  display: block;
+}
+
+.cke_dialog label {
+  margin-top: 3px;
+}
+
+.cke_dialog_ui_labeled_label {
+  font-weight: bold;
+}
+
 .cke_dialog .wk-cke-icon-list table,
 .cke_dialog .wk-cke-icon-list tbody,
 .cke_dialog .wk-cke-icon-list tr {
@@ -22,4 +34,10 @@
 .cke_dialog .wk-cke-icon-list i {
   font-size: 3em;
   vertical-align: middle;
+}
+
+.cke_dialog .wk-cke-dialog-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
 }

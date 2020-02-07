@@ -3,14 +3,17 @@ CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
   var imgPath = CKEDITOR.plugins.getPath('wk_three_column_builder') + 'img/';
 
   return {
-    title: 'Edit Three Column Builder',
+    title: 'Three Column Grid Options',
     contents: [{
       id: 'tab1',
       expand: true,
       elements: [
         {
           type: 'html',
-          html: '<img class="wk-cke-dialog-image" src="' + imgPath + 'three-columns.jpg" />'
+          html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
+                '<div>' +
+                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'three-columns.jpg" />' +
+                '</div>'
         },
         {
           id: 'spacing',

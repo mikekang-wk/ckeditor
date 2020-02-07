@@ -2,8 +2,23 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
   var config = editor.config;
   var imgPath = CKEDITOR.plugins.getPath('wk_two_column_builder') + 'img/';
 
+  function getTypeOptions() {
+    var options = [
+      [
+        '<img class="wk-cke-dialog-image" src="' + imgPath + 'image-text.jpg" />',
+        'image-text',
+      ],
+      [
+        '<img class="wk-cke-dialog-image" src="' + imgPath + 'text-image.jpg" />',
+        'text-image',
+      ],
+    ];
+
+    return options;
+  }
+
   return {
-    title: 'Edit Two Column Builder',
+    title: 'Two Column Grid Options',
     contents: [{
       id: 'tab1',
       label: '',
@@ -11,8 +26,17 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
       title: '',
       elements: [
         {
-          type: 'html',
-          html: '<img class="wk-cke-dialog-image" src="' + imgPath + 'two-columns.jpg" />'
+          className: 'wk-display-block',
+          id: 'layout',
+          type: 'radio',
+          label: 'Choose Layout (note: IMAGE column stacks on top of TEXT column on mobile)',
+          items: getTypeOptions(),
+          setup: function(widget) {
+              this.setValue(widget.data.layout || '');
+          },
+          commit: function(widget) {
+              widget.setData('layout', this.getValue());
+          },
         },
         {
           id: 'ratio',
@@ -42,7 +66,7 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
         {
           id: 'spacing',
           type: 'select',
-          label: 'Add Spacing',
+          label: 'Spacing',
           items: [
             ['None', 'none'],
             ['Above', 'above'],
@@ -69,17 +93,6 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
           },
           commit: function(widget) {
               widget.setData('alignment', this.getValue());
-          },
-        },
-        {
-          id: 'reverse',
-          type: 'checkbox',
-          label: 'Reverse stacking order on mobile',
-          setup: function(widget) {
-            this.setValue(widget.data.reverse || '');
-          },
-          commit: function(widget) {
-              widget.setData('reverse', this.getValue());
           },
         },
       ]
