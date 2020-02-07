@@ -26,10 +26,14 @@
 
           if (action) {
             this.setData('action', action);
+          } else {
+            this.setData('action', 'link');
           }
 
           if (appearance) {
             this.setData('appearance', appearance);
+          } else {
+            this.setData('appearance', 'link-arrow');
           }
 
           if (reference) {
@@ -47,30 +51,6 @@
           const appearance = this.data.appearance;
           const reference = this.data.reference;
           const text = this.data.text;
-
-          function makeLink() {
-            el.setAttribute('href', reference);
-          }
-
-          function makeLinkTab() {
-            el.setAttribute('href', reference);
-            el.setAttribute('target', '_blank');
-          }
-
-          function makeMarketoButton() {
-            el.addClass('button-marketo-event');
-            el.setAttribute('data-target', '#wk_modal');
-            el.setAttribute('data-toggle', 'modal');
-            el.setAttribute('data-form-nid', reference);
-          }
-
-          function makeWistiaButton() {
-            el.addClass('wistia_embed');
-            el.addClass('wistia_async_' + reference);
-            el.addClass('popover=true');
-            el.addClass('popoverAnimateThumbnail=true');
-            el.addClass('popoverContent=link');
-          }
 
           function hardReset () {
             var ckeClasses = el.getAttribute('class');
@@ -115,16 +95,24 @@
 
             switch (action) {
               case 'link':
-                makeLink();
+                el.setAttribute('href', reference);
                 break;
               case 'link-tab':
-                makeLinkTab();
+                el.setAttribute('href', reference);
+                el.setAttribute('target', '_blank');
                 break;
               case 'form':
-                makeMarketoButton();
+                el.addClass('button-marketo-event');
+                el.setAttribute('data-target', '#wk_modal');
+                el.setAttribute('data-toggle', 'modal');
+                el.setAttribute('data-form-nid', reference);
                 break;
               case 'video':
-                makeWistiaButton();
+                el.addClass('wistia_embed');
+                el.addClass('wistia_async_' + reference);
+                el.addClass('popover=true');
+                el.addClass('popoverAnimateThumbnail=true');
+                el.addClass('popoverContent=link');
                 break;
               default:
                 break;

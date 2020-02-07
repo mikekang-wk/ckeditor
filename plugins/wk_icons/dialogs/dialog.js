@@ -17,12 +17,12 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
 
   function getColorOptions() {
     var options = [
-      ['Primary', '#0094ff'],
-      ['Secondary', '#66cc00'],
-      ['White', '#ffffff'],
-      ['Gray Dark', '#333333'],
-      ['Gray Medium', '#707070'],
-      ['Gray Light', '#e3e3e3'],
+      ['Primary', 'color-primary'],
+      ['Secondary', 'color-secondary'],
+      ['White', 'color-white'],
+      ['Gray Dark', 'color-gray-dk'],
+      ['Gray Medium', 'color-gray-md'],
+      ['Gray Light', 'color-gray-lt'],
     ];
 
     return options;
@@ -92,7 +92,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
           label: 'Size',
           items: getSizeOptions(),
           setup: function(widget) {
-              this.setValue(widget.data.size || 'font-size-normal');
+              this.setValue(widget.data.size);
           },
           commit: function(widget) {
               widget.setData('size', this.getValue());
@@ -104,7 +104,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
           label: 'Color',
           items: getColorOptions(),
           setup: function(widget) {
-              this.setValue(widget.data.color || '#333333');
+              this.setValue(widget.data.color);
           },
           commit: function(widget) {
               widget.setData('color', this.getValue());
@@ -140,7 +140,7 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
               tds[i].removeAttribute('style');
             }
 
-            this.setValue(widget.data.icon || 'icon-workiva-w');
+            this.setValue(widget.data.icon);
           },
           commit: function(widget) {
               widget.setData('icon', this.getValue());

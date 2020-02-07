@@ -31,26 +31,22 @@
         },
         init: function() {
           const el = this.element;
-          const shadow = el.getAttribute('data-shadow');
 
-          if (shadow) {
-            this.setData('shadow', shadow);
-          } else {
+          if (el.hasClass('noshadow')) {
             this.setData('shadow', 'false');
+          } else {
+            this.setData('shadow', 'true');
           }
         },
         data: function() {
           const el = this.element;
           const shadow = this.data.shadow;
-          const className = 'noshadow';
 
-          el.removeClass(className);
+          el.removeClass('noshadow');
 
           if (shadow === 'false') {
-            el.addClass(className);
+            el.addClass('noshadow');
           }
-
-          el.data('shadow', shadow);
         },
       });
     },

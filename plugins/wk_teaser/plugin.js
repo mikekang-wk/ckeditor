@@ -36,10 +36,9 @@
         },
         init: function() {
           const el = this.element;
-          const type = el.getAttribute('data-type');
 
-          if (type) {
-            this.setData('type', type);
+          if (el.hasClass('teaser-horizontal')) {
+            this.setData('type', 'horizontal');
           } else {
             this.setData('type', 'vertical');
           }
@@ -55,7 +54,6 @@
             el.addClass(className);
           }
 
-          el.data('type', type);
         },
       });
     },

@@ -20,21 +20,34 @@
         init: function() {
           const el = this.element;
 
-          const iconName = el.getAttribute('data-icon-name');
-          const iconSize = el.getAttribute('data-icon-size');
+          const iconName = el.getAttribute('data-name');
+          const iconSize = el.getAttribute('data-size');
+          const iconColor = el.getAttribute('data-color');
 
           if (iconName) {
             this.setData('icon', iconName);
+          } else {
+            this.setData('icon', 'icon-book');
           }
 
           if (iconSize) {
             this.setData('size', iconSize);
+          } else {
+            this.setData('size', 'font-size-normal');
+          }
+
+          if (iconColor) {
+            this.setData('color', iconColor);
+          } else {
+            this.setData('color', 'color-gray-dk');
           }
         },
         data: function() {
           const el = this.element;
           const iconName = this.data.icon || '';
           const iconSize = this.data.size || '';
+          const iconColor = this.data.color || '';
+
           const className = el.getAttribute('class');
 
           let ckeClasses;
@@ -49,15 +62,13 @@
             }
           }
 
-          if (iconName) {
-            el.data('icon-name', iconName);
-            el.addClass(iconName);
-          }
+          el.addClass(iconName);
+          el.addClass(iconSize);
+          el.addClass(iconColor);
 
-          if (iconSize) {
-            el.data('icon-size', iconSize);
-            el.addClass(iconSize);
-          }
+          el.data('name', iconName);
+          el.data('size', iconSize);
+          el.data('color', iconColor);
         },
       });
 

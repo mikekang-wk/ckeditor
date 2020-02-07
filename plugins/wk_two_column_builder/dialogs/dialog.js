@@ -6,11 +6,11 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
     var options = [
       [
         '<img class="wk-cke-dialog-image" src="' + imgPath + 'image-text.jpg" />',
-        'image-text',
+        'wk-cke-image-text',
       ],
       [
         '<img class="wk-cke-dialog-image" src="' + imgPath + 'text-image.jpg" />',
-        'text-image',
+        'wk-cke-text-image',
       ],
     ];
 
@@ -29,10 +29,10 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
           className: 'wk-display-block',
           id: 'layout',
           type: 'radio',
-          label: 'Choose Layout (note: IMAGE column stacks on top of TEXT column on mobile)',
+          label: 'Choose Layout (note: IMAGE column stacks above TEXT column on mobile)',
           items: getTypeOptions(),
           setup: function(widget) {
-              this.setValue(widget.data.layout || '');
+              this.setValue(widget.data.layout);
           },
           commit: function(widget) {
               widget.setData('layout', this.getValue());
@@ -45,19 +45,19 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
           items: [
             [
               '6:6',
-              '6-6',
+              'wk-cke-6-6',
             ],
             [
               '8:4',
-              '8-4',
+              'wk-cke-8-4',
             ],
             [
               '4:8',
-              '4-8',
+              'wk-cke-4-8',
             ],
           ],
           setup: function(widget) {
-            this.setValue(widget.data.ratio || '6-6');
+            this.setValue(widget.data.ratio);
           },
           commit: function(widget) {
             widget.setData('ratio', this.getValue());
@@ -74,7 +74,7 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
             ['Above and Below', 'both'],
           ],
           setup: function(widget) {
-            this.setValue(widget.data.spacing || 'none');
+            this.setValue(widget.data.spacing);
           },
           commit: function(widget) {
               widget.setData('spacing', this.getValue());
@@ -85,11 +85,11 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
           type: 'select',
           label: 'Vertical Alignment',
           items: [
-            ['Top', 'top'],
-            ['Center', 'center'],
+            ['Top', 'wk-cke-align-items-top'],
+            ['Center', 'wk-cke-align-items-center'],
           ],
           setup: function(widget) {
-            this.setValue(widget.data.alignment || 'top');
+            this.setValue(widget.data.alignment);
           },
           commit: function(widget) {
               widget.setData('alignment', this.getValue());

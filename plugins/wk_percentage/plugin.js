@@ -24,11 +24,13 @@
 
           if (percentage) {
             this.setData('percentage', percentage);
+          } else {
+            this.setData('percentage', '0');
           }
         },
         data: function() {
           const el = this.element;
-          const percentage = this.data.percentage || 0;
+          const percentage = this.data.percentage;
 
           if (percentage) {
             el.data('percentage', percentage);

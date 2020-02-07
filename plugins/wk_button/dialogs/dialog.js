@@ -31,11 +31,11 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           label: 'Appearance',
           items: getActionOptions(),
           setup: function(widget) {
-              this.setValue(widget.data.appearance || 'link-arrow');
+              this.setValue(widget.data.appearance);
           },
           commit: function(widget) {
               widget.setData('appearance', this.getValue());
-          }
+          },
         },
         {
           id: 'action',
@@ -48,7 +48,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
             ['Play a video in a modal', 'video'],
           ],
           setup: function(widget) {
-              this.setValue(widget.data.action || 'link');
+              this.setValue(widget.data.action);
           },
           commit: function(widget) {
               widget.setData('action', this.getValue());
@@ -59,22 +59,34 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           type: 'text',
           label: 'Reference (URL / Video ID / Marketo Node ID)',
           setup: function(widget) {
-              this.setValue(widget.data.reference || '');
+              this.setValue(widget.data.reference);
           },
           commit: function(widget) {
               widget.setData('reference', this.getValue());
-          }
+          },
+          validate: function() {
+            if(!this.getValue()) {
+                alert('All fields are required');
+                return false;
+            }
+          },
         },
         {
           id: 'text',
           type: 'text',
           label: 'Text',
           setup: function(widget) {
-              this.setValue(widget.data.text || '');
+              this.setValue(widget.data.text);
           },
           commit: function(widget) {
               widget.setData('text', this.getValue());
-          }
+          },
+          validate: function() {
+            if(!this.getValue()) {
+                alert('All fields are required');
+                return false;
+            }
+          },
         },
       ]
     }],

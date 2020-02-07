@@ -42,129 +42,154 @@
         init: function() {
           const el = this.element;
 
-          if (el.hasClass('wk-cke-ratio-6-6')){
-            this.setData('ratio', '6-6');
+          if (
+            !el.hasClass('wk-cke-image-text') &&
+            !el.hasClass('wk-cke-text-image')
+          ) {
+            this.setData('layout', 'wk-cke-image-text');
           }
 
-          if (el.hasClass('wk-cke-ratio-8-4')){
-            this.setData('ratio', '8-4');
+          if (el.hasClass('wk-cke-image-text')) {
+            this.setData('layout', 'wk-cke-image-text');
           }
 
-          if (el.hasClass('wk-cke-ratio-4-8')){
-            this.setData('ratio', '4-8');
+          if (el.hasClass('wk-cke-text-image')) {
+            this.setData('layout', 'wk-cke-text-image');
           }
 
-          if (el.hasClass('align-items-center')){
-            this.setData('alignment', 'center');
+          if (
+            !el.hasClass('wk-cke-6-6') &&
+            !el.hasClass('wk-cke-8-4') &&
+            !el.hasClass('wk-cke-4-8')
+          ) {
+            this.setData('ratio', 'wk-cke-6-6');
           }
 
-          if (el.hasClass('align-items-top')){
-            this.setData('alignment', 'top');
+          if (el.hasClass('wk-cke-6-6')) {
+            this.setData('ratio', 'wk-cke-6-6');
+          }
+
+          if (el.hasClass('wk-cke-8-4')) {
+            this.setData('ratio', 'wk-cke-8-4');
+          }
+
+          if (el.hasClass('wk-cke-4-8')) {
+            this.setData('ratio', 'wk-cke-4-8');
+          }
+
+          if (
+            !el.hasClass('wk-cke-align-items-center') &&
+            !el.hasClass('wk-cke-align-items-top')
+          ) {
+            this.setData('alignment', 'wk-cke-align-items-top');
+          }
+
+          if (el.hasClass('wk-cke-align-items-center')){
+            this.setData('alignment', 'wk-cke-align-items-center');
+          }
+
+          if (el.hasClass('wk-cke-align-items-top')){
+            this.setData('alignment', 'wk-cke-align-items-top');
+          }
+
+          if (
+            !el.hasClass('spacer-top-lg') &&
+            !el.hasClass('spacer-bottom-lg')
+          ) {
+            this.setData('spacing', 'none');
           }
 
           if (
             el.hasClass('spacer-top-lg') &&
             el.hasClass('spacer-bottom-lg')
-          ){
+          ) {
             this.setData('spacing', 'both');
-          } else {
-            if (el.hasClass('spacer-bottom-lg')) {
-              this.setData('spacing', 'below');
-            } else if (el.hasClass('spacer-top-lg')) {
-              this.setData('spacing', 'above');
-            } else {
-              this.setData('spacing', 'none');
-            }
+          }
+
+          if (
+            el.hasClass('spacer-top-lg') &&
+            !el.hasClass('spacer-bottom-lg')
+          ) {
+            this.setData('spacing', 'above');
+          }
+
+          if (
+            !el.hasClass('spacer-top-lg') &&
+            el.hasClass('spacer-bottom-lg')
+          ) {
+            this.setData('spacing', 'below');
           }
         },
         data: function() {
           const el = this.element;
 
-          const ratio = this.data.ratio || 'col-col';
-          const spacing = this.data.spacing || 'none';
-          const alignment = this.data.alignment || 'top';
+          const layout = this.data.layout;
+          const ratio = this.data.ratio;
+          const spacing = this.data.spacing;
+          const alignment = this.data.alignment;
 
           var ckeClasses = [
-            'wk-cke-ratio-6-6',
-            'wk-cke-ratio-8-4',
-            'wk-cke-ratio-4-8',
-            'align-items-top',
-            'align-items-center',
+            'wk-cke-image-text',
+            'wk-cke-text-image',
+            'wk-cke-6-6',
+            'wk-cke-8-4',
+            'wk-cke-4-8',
+            'wk-cke-align-items-top',
+            'wk-cke-align-items-center',
             'spacer-top-lg',
             'spacer-bottom-lg',
           ];
 
-          function removeCKEClasses() {
-            for (var i = 0; i < ckeClasses.length; i += 1) {
-              el.removeClass(ckeClasses[i]);
-            }
+          for (var i = 0; i < ckeClasses.length; i += 1) {
+            el.removeClass(ckeClasses[i]);
           }
 
-          function colSixSix() {
-            el.addClass('wk-cke-ratio-6-6');
+          switch (layout) {
+            case 'wk-cke-image-text':
+              el.addClass('wk-cke-image-text');
+              break;
+            case 'wk-cke-text-image':
+              el.addClass('wk-cke-text-image');
+              break;
+            default:
+              break;
           }
-
-          function colEightFour() {
-            el.addClass('wk-cke-ratio-8-4');
-          }
-
-          function colFourEight() {
-            el.addClass('wk-cke-ratio-4-8');
-          }
-
-          function alignTop() {
-            el.addClass('align-items-top');
-          }
-
-          function alignCenter() {
-            el.addClass('align-items-center');
-          }
-
-          function addTopSpace() {
-            el.addClass('spacer-top-lg');
-          }
-
-          function addBottomSpace() {
-            el.addClass('spacer-bottom-lg');
-          }
-
-          removeCKEClasses();
 
           switch (spacing) {
             case 'both':
-              addTopSpace();
-              addBottomSpace();
+              el.addClass('spacer-top-lg');
+              el.addClass('spacer-bottom-lg');
               break;
             case 'above':
-              addTopSpace();
+              el.addClass('spacer-top-lg');
               break;
             case 'below':
-              addBottomSpace();
+              el.addClass('spacer-bottom-lg');
               break;
             default:
               break;
           }
 
           switch (alignment) {
-            case 'top':
-              alignTop();
+            case 'wk-cke-align-items-top':
+              el.addClass('wk-cke-align-items-top');
               break;
-            case 'center':
-              alignCenter();
+            case 'wk-cke-align-items-center':
+              el.addClass('wk-cke-align-items-center');
               break;
             default:
               break;
           }
 
           switch (ratio) {
-            case '6-6':
-              colSixSix();
+            case 'wk-cke-6-6':
+              el.addClass('wk-cke-6-6');
               break;
-            case '8-4':
-              colEightFour();
+            case 'wk-cke-8-4':
+              el.addClass('wk-cke-8-4');
               break;
-            case '4-8':
-              colFourEight();
+            case 'wk-cke-4-8':
+              el.addClass('wk-cke-4-8');
               break;
             default:
               break;
