@@ -28,7 +28,7 @@ CKEDITOR.dialog.add('wk_teaser', function(editor) {
           id: 'type',
           className: 'wk-display-block',
           type: 'radio',
-          label: 'Card Type',
+          label: 'Type',
           items: getTypeOptions(),
           setup: function(widget) {
             this.setValue(widget.data.type);

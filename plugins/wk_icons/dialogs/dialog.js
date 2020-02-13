@@ -5,11 +5,11 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
 
   function getSizeOptions() {
     var options =   [
-      ['Normal', 'font-size-normal'],
-      ['Smaller', 'font-size-smaller'],
-      ['Large', 'font-size-large'],
-      ['Larger', 'font-size-larger'],
-      ['Largest', 'font-size-largest'],
+      ['Normal', 'text-normal'],
+      ['Smaller', 'text-small'],
+      ['Large', 'text-large'],
+      ['Larger', 'text-larger'],
+      ['Largest', 'text-largest'],
     ];
 
     return options;
@@ -17,12 +17,12 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
 
   function getColorOptions() {
     var options = [
-      ['Primary', 'color-primary'],
-      ['Secondary', 'color-secondary'],
-      ['White', 'color-white'],
-      ['Gray Dark', 'color-gray-dk'],
-      ['Gray Medium', 'color-gray-md'],
-      ['Gray Light', 'color-gray-lt'],
+      ['Primary', 'text-primary'],
+      ['Secondary', 'text-secondary'],
+      ['White', 'text-white'],
+      ['Gray Dark', 'text-gray-dk'],
+      ['Gray Medium', 'text-gray-md'],
+      ['Gray Light', 'text-gray-lt'],
     ];
 
     return options;

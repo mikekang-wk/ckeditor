@@ -28,7 +28,7 @@ CKEDITOR.dialog.add('wk_card', function(editor) {
           className: 'wk-display-block',
           id: 'shadow',
           type: 'radio',
-          label: 'Card Type',
+          label: 'Type',
           items: getShadowOptions(),
           setup: function(widget) {
             this.setValue(widget.data.shadow);

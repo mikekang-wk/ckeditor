@@ -41,7 +41,6 @@ CKEDITOR.editorConfig = function( config ) {
 //    'pastetext',
 //    'removeformat',
 //    'lineutils',
-//    'wk_tables',
     'wk_cke_dialog_styles',
     'wk_percentage',
     'wk_card',
@@ -50,6 +49,7 @@ CKEDITOR.editorConfig = function( config ) {
     'wk_icons',
     'wk_two_column_builder',
     'wk_three_column_builder',
+//    'wk_image_gallery',
   ];
 
   config.extraPlugins = pluginsArray.join(",");

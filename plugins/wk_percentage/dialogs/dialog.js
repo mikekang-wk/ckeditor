@@ -5,7 +5,7 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
   function populatePercentageOptions() {
     var options = [];
 
-    for (var i = 0; i < 101; i +=1) {
+    for (var i = 0; i < 1000; i +=1) {
       (function(index){
         var option = [i, i];
 

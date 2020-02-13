@@ -33,13 +33,13 @@
           if (iconSize) {
             this.setData('size', iconSize);
           } else {
-            this.setData('size', 'font-size-normal');
+            this.setData('size', 'text-normal');
           }
 
           if (iconColor) {
             this.setData('color', iconColor);
           } else {
-            this.setData('color', 'color-gray-dk');
+            this.setData('color', 'text-gray-dk');
           }
         },
         data: function() {
