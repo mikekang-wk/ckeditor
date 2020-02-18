@@ -41,3 +41,14 @@
   margin: 0 auto;
   max-width: 100%;
 }
+
+/* not technically dialog, but same concept */
+.cke_button_label.cke_button__wk_two_column_builder_label,
+.cke_button_label.cke_button__wk_three_column_builder_label,
+.cke_button_label.cke_button__wk_button_label,
+.cke_button_label.cke_button__wk_card_label,
+.cke_button_label.cke_button__wk_teaser_label,
+.cke_button_label.cke_button__wk_percentage_label,
+.cke_button_label.cke_button__wk_icons_label {
+  display: inline;
+}
