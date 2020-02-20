@@ -1,3 +1,15 @@
+.cke_dialog td.cke_dialog_ui_vbox_child {
+  padding: 0;
+}
+
+.cke_dialog .cke_disabled {
+  display: none;
+}
+
+.cke_dialog .ui-autocomplete {
+  position: absolute;
+}
+
 .wk-display-block {
   display: block;
 }
