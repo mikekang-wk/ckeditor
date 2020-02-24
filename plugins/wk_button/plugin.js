@@ -61,6 +61,9 @@
               'form-nid',
               'target',
               'toggle',
+              'entity-substitution',
+              'entity-type',
+              'entity-uuid',
               'wk-cke-button-action',
               'wk-cke-button-appearance',
               'wk-cke-button-reference',
@@ -96,16 +99,37 @@
             switch (action) {
               case 'link':
                 el.setAttribute('href', reference);
+
+// if the data is not empty?
+//el.data('entity-substitution', canonical);
+//el.data('entity-type', node);
+//el.data('entity-uuid', 72f47db7-ff70-4fc1-afcd-35337d65ffc6);
+
                 break;
               case 'link-tab':
                 el.setAttribute('href', reference);
                 el.setAttribute('target', '_blank');
+//<a
+//  data-entity-substitution="canonical"
+//  data-entity-type="node"
+//  data-entity-uuid="72f47db7-ff70-4fc1-afcd-35337d65ffc6" href="/node/1612"
+//>
                 break;
               case 'form':
+//                console.log(window.getNodeId);
                 el.addClass('button-marketo-event');
                 el.setAttribute('data-target', '#wk_modal');
                 el.setAttribute('data-toggle', 'modal');
-                el.setAttribute('data-form-nid', reference);
+//              el.setAttribute('data-form-nid', reference);
+
+//<a
+//  href="/events/amplify-local-new-york-city"
+//  class="btn btn-primary button-marketo-event"
+//  data-target="#wk_modal"
+//  data-toggle="modal"
+//  data-form-nid="4120"
+//  data-nid="3722" // still need to do this step!
+//>
                 break;
               case 'video':
                 el.addClass('wistia_embed');
@@ -155,6 +179,46 @@
           }
         },
       });
+
+      var marketoAJAX = function(){
+        var endpoint = '/api/marketo-form-list?_format=hal_json';
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            var response = JSON.parse(xhr.responseText);
+
+//            editor.wkMarketoForms = response;
+            console.log('json', xhr.responseText, editor.wkMarketoForms);
+          } else {
+            console.log('XHR request failed');
+          }
+        };
+
+        xhr.open('GET', endpoint);
+        xhr.send();
+      };
+
+//    marketoAJAX();
+      editor.wkMarketoForms = [
+        {
+          "title": "Event - Amplify Local - FIN Rep. Only",
+          "field_marketo_form_id": "4977",
+          "nid": "4173",
+          "field_marketo_form_success_event": "mktoEvent"
+        },
+        {
+          "title": "Event - Amplify Local - FIN &amp; SOX",
+          "field_marketo_form_id": "4981",
+          "nid": "4120",
+          "field_marketo_form_success_event": "mktoEvent"
+        },
+        {
+          "title": "Event - Webinar - NO CPE",
+          "field_marketo_form_id": "5024",
+          "nid": "4108",
+          "field_marketo_form_success_event": "mktoEvent"
+        },
+      ];
     },
   });
 })();

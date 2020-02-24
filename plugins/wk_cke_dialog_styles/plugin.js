@@ -3,9 +3,18 @@
     icons: 'wk_cke_dialog_styles',
     init: function(editor) {
 
-//      window.getNodeId = function() {
-//
-//      };
+      window.getNodeId = function() {
+        if (!window.drupalSettings) {
+          console.log('window.getNodeId(): drupalSettings not found');
+          return;
+        }
+
+        var currentPath = window.drupalSettings.path.currentPath;
+        var regex = new Regexp(/(\d+)/, 'i');
+        var id = currentPath.match(regex);
+
+        return id;
+      };
 
       window.addLinkitAttributes = function(el) {
         var drupalPathPrefix = '';
@@ -13,6 +22,7 @@
         if (window.drupalSettings) {
           drupalPathPrefix = window.drupalSettings.path.pathPrefix;
         }
+
 
         var path = drupalPathPrefix;
 

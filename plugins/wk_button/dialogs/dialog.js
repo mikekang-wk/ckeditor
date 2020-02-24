@@ -5,6 +5,14 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   var actionSelect;
   var conditionalInputs = {};
+  var additionalFields = {
+    // dump these atts into the link on gen
+    // grab these vars to store in widget data?
+
+    // data-entity-type: "node"
+    // data-entity-uuid: "7268ce9d-f351-4aaf-82ee-e2a86fce5f9f"
+    // data-substitution: "canonical"
+  };
 
   $.widget( "custom.catcomplete", $.ui.autocomplete, {
     _create: function() {
@@ -21,7 +29,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
         var li;
 
         if ( item.group != currentCategory ) {
-          ul.append( "<li class='ui-autocomplete-category linkit-result-line--group ui-menu-divider'>" + item.group + "</li>" );
+          ul.append( "<li class='ui-autocomplete-category linkit-result-line--group'>" + item.group + "</li>" );
           currentCategory = item.group;
         }
 
@@ -36,10 +44,12 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
   });
 
   function populateMarketoFormIDs() {
+    var forms = editor.wkMarketoForms;
     var options = [];
 
-    // AJAX call to populate form IDs?
-    options.push(["Test", "test"]);
+    for (var i = 0; i < forms.length; i += 1) {
+      options.push([forms[i].title, forms[i].field_marketo_form_id]);
+    }
 
     return options;
   }
@@ -52,7 +62,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     conditionalInputs[id] = that;
 
     var currentOption = '';
-    var selectedOption = getSelectedActionOption();
+    var selectedOption = getSelectedOption(actionSelect);
 
     if (selectedOption === 'link-tab') {
       selectedOption = 'link';
@@ -84,10 +94,18 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
   function saveValueIfVisible(that, widget) {
     var getEl = that.getElement();
 
+    function saveRelatedValues() {
+// get all wk data attribute on the el? that?
+//    widget.setData('related_values', this.getValue());
+    }
+
     if (getEl.isVisible()) {
       widget.setData(that.id, that.getValue());
+
+      saveValuesIfNotEmpty();
     } else {
       widget.setData(that.id, null);
+//      widget.setData(that.id, null);
     }
   }
 
@@ -110,6 +128,10 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     return true;
   }
 
+  function clearAdditionalFields() {
+    additionalFields = {};
+  }
+
   function clearAllConditionalInputs() {
     for (var key in conditionalInputs) {
       conditionalInputs[key].getInputElement().$.value = '';
@@ -122,21 +144,23 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     }
   }
 
-  function getSelectedActionIndex() {
-    var index = actionSelect.options[actionSelect.selectedIndex];
-    return index;
-  }
-
-  function getSelectedActionOption() {
-    var value = actionSelect.options[actionSelect.selectedIndex].value;
+  function getSelectedOption(select) {
+    var value = select.options[select.selectedIndex].value;
     return value;
   }
 
+  function handleFormNodeIdChangeEvent() {
+    additionalFields['data-nid'] = window.getNodeId;
+
+    console.log(additionalFields);
+  }
+
   function handleActionChangeEvent() {
-    var selectedOption = getSelectedActionOption();
+    var selectedOption = getSelectedOption(actionSelect);
 
     hideAllConditionalInputs();
     clearAllConditionalInputs();
+    clearAdditionalFields();
 
     switch (selectedOption) {
       case 'link':
@@ -170,13 +194,9 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   function clearReferenceAttributes(input) {
     input.title =  '';
-
     input.removeAttribute('data-autocomplete-path');
-    input.removeAttribute('data-wk-path');
-    input.removeAttribute('data-wk-entity-uuid');
-    input.removeAttribute('data-wk-entity-type-id');
-    input.removeAttribute('data-wk-value');
-    input.removeAttribute('data-wk-substitution-id');
+
+    clearAdditionalFields();
   }
 
   function autocomplete(el, suggestions) {
@@ -194,11 +214,11 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           el.value = ui.item.path;
           el.title =  ui.item.value;
 
-          el.setAttribute('data-wk-path', ui.item.path);
-          el.setAttribute('data-wk-entity-uuid', ui.item.entity_uuid);
-          el.setAttribute('data-wk-entity-type-id', ui.item.entity_type_id);
-          el.setAttribute('data-wk-value', ui.item.value);
-          el.setAttribute('data-wk-substitution-id', ui.item.substitution_id);
+          additionalFields['data-entity-uuid'] = ui.item.entity_uuid;
+          additionalFields['data-entity-type'] = ui.item.entity_type_id;
+          additionalFields['data-substitution'] = ui.item.substitution_id;
+
+          console.log(additionalFields);
 
           return false;
         }
@@ -349,6 +369,9 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           commit: function(widget) {
               widget.setData('text', this.getValue());
           },
+          validate: function() {
+            return validateInput(this);
+          }
         },
         {
           className: 'wk-select-action',
@@ -390,6 +413,8 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           },
           commit: function(widget) {
             saveValueIfVisible(this, widget);
+
+//            saveValuesIfNotEmpty(this, widget);
           },
           validate: function() {
             return validateInput(this);
@@ -403,6 +428,13 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           items: populateMarketoFormIDs(),
           setup: function(widget) {
             setUpInput(this, widget);
+
+            var el = this.getInputElement().$;
+
+            el.addEventListener(
+              'change',
+              handleFormNodeIdChangeEvent,
+            );
           },
           commit: function(widget) {
             saveValueIfVisible(this, widget);
