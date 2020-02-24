@@ -3,6 +3,10 @@
     icons: 'wk_cke_dialog_styles',
     init: function(editor) {
 
+//      window.getNodeId = function() {
+//
+//      };
+
       window.addLinkitAttributes = function(el) {
         var drupalPathPrefix = '';
 

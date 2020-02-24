@@ -2,7 +2,6 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
   var config = editor.config;
   var dialog;
 
-
   function getSizeOptions() {
     var options =   [
       ['Normal', 'text-normal'],

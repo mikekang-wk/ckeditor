@@ -1,15 +1,157 @@
 CKEDITOR.dialog.add('wk_button', function(editor) {
   var config = editor.config;
   var imgPath = CKEDITOR.plugins.getPath('wk_button') + 'img/';
-  var minCharacterLength = 3;
+  var minCharacterLength = 1;
 
+  var actionSelect;
   var conditionalInputs = {};
 
-  function handleActionChangeEvent() {
-    var select = event.target;
-    var value = select.options[select.selectedIndex].value;
+  $.widget( "custom.catcomplete", $.ui.autocomplete, {
+    _create: function() {
+      this._super();
+      this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+    },
+    _renderMenu: function( ul, items ) {
+      var that = this,
+          currentCategory = "";
 
-    console.log(value, conditionalInputs);
+      ul[0].classList.add('linkit-ui-autocomplete');
+
+      $.each( items, function( index, item ) {
+        var li;
+
+        if ( item.group != currentCategory ) {
+          ul.append( "<li class='ui-autocomplete-category linkit-result-line--group ui-menu-divider'>" + item.group + "</li>" );
+          currentCategory = item.group;
+        }
+
+        li = that._renderItemData( ul, item );
+
+        if ( item.group ) {
+          li.attr( "aria-label", item.group + " : " + item.label );
+          li.addClass('linkit-result-line');
+        }
+      });
+    }
+  });
+
+  function populateMarketoFormIDs() {
+    var options = [];
+
+    // AJAX call to populate form IDs?
+    options.push(["Test", "test"]);
+
+    return options;
+  }
+
+  function setUpInput(that, widget) {
+    var getEl = that.getElement();
+    var el = that.getInputElement().$;
+    var id = that.id;
+
+    conditionalInputs[id] = that;
+
+    var currentOption = '';
+    var selectedOption = getSelectedActionOption();
+
+    if (selectedOption === 'link-tab') {
+      selectedOption = 'link';
+    }
+
+    switch (id) {
+      case 'reference':
+        currentOption = 'link';
+        break;
+      case 'form_node_id':
+        currentOption = 'form';
+        break;
+      case 'wistia_video_id':
+        currentOption = 'video';
+        break;
+      default:
+        break;
+    }
+
+    if (currentOption === selectedOption) {
+      window.addLinkitAttributes(el);
+      that.setValue(widget.data.reference);
+      getEl.show();
+    } else {
+      getEl.hide();
+    }
+  }
+
+  function saveValueIfVisible(that, widget) {
+    var getEl = that.getElement();
+
+    if (getEl.isVisible()) {
+      widget.setData(that.id, that.getValue());
+    } else {
+      widget.setData(that.id, null);
+    }
+  }
+
+  function validateInput(that) {
+    var getEl = that.getElement();
+    var getValue = that.getValue();
+    var label = that.label;
+
+    if (
+      getEl.isVisible() &&
+      !getValue
+    ) {
+      alert(label + ' is a required field.');
+
+      getEl.focus();
+
+      return false;
+    }
+
+    return true;
+  }
+
+  function clearAllConditionalInputs() {
+    for (var key in conditionalInputs) {
+      conditionalInputs[key].getInputElement().$.value = '';
+    }
+  }
+
+  function hideAllConditionalInputs() {
+    for (var key in conditionalInputs) {
+      conditionalInputs[key].getElement().hide();
+    }
+  }
+
+  function getSelectedActionIndex() {
+    var index = actionSelect.options[actionSelect.selectedIndex];
+    return index;
+  }
+
+  function getSelectedActionOption() {
+    var value = actionSelect.options[actionSelect.selectedIndex].value;
+    return value;
+  }
+
+  function handleActionChangeEvent() {
+    var selectedOption = getSelectedActionOption();
+
+    hideAllConditionalInputs();
+    clearAllConditionalInputs();
+
+    switch (selectedOption) {
+      case 'link':
+      case 'link-tab':
+        conditionalInputs.reference.getElement().show();
+        break;
+      case 'form':
+        conditionalInputs.form_node_id.getElement().show();
+        break;
+      case 'video':
+        conditionalInputs.wistia_video_id.getElement().show();
+        break;
+      default:
+        break;
+    }
   }
 
   function debounce(fn, duration) {
@@ -26,20 +168,38 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     }
   }
 
+  function clearReferenceAttributes(input) {
+    input.title =  '';
+
+    input.removeAttribute('data-autocomplete-path');
+    input.removeAttribute('data-wk-path');
+    input.removeAttribute('data-wk-entity-uuid');
+    input.removeAttribute('data-wk-entity-type-id');
+    input.removeAttribute('data-wk-value');
+    input.removeAttribute('data-wk-substitution-id');
+  }
+
   function autocomplete(el, suggestions) {
     try {
-      jQuery(el).autocomplete({
+      jQuery(el).catcomplete({
         appendTo: el.parentElement,
-        minLength: minCharacterLength,
+        minLength: 0,
         source: suggestions,
         focus: function(event, ui) {
           el.value = ui.item.label;
+
           return false;
         },
         select: function(event, ui) {
-          // this is where we modify hidden field values
-          // input.value = ( ui.item.label );
-          // input.value = ( ui.item.value );
+          el.value = ui.item.path;
+          el.title =  ui.item.value;
+
+          el.setAttribute('data-wk-path', ui.item.path);
+          el.setAttribute('data-wk-entity-uuid', ui.item.entity_uuid);
+          el.setAttribute('data-wk-entity-type-id', ui.item.entity_type_id);
+          el.setAttribute('data-wk-value', ui.item.value);
+          el.setAttribute('data-wk-substitution-id', ui.item.substitution_id);
+
           return false;
         }
       });
@@ -110,6 +270,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
       },
     ];
 
+    clearReferenceAttributes(input);
     autocomplete(input, suggestions);
 
 //    var ajax = (function() {
@@ -158,6 +319,9 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   return {
     title: 'Call to Action Options',
+    onShow: function() {
+      actionSelect = document.querySelector('select.wk-select-action');
+    },
     contents: [{
       id: 'tab1',
       expand: true,
@@ -176,9 +340,22 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           },
         },
         {
+          id: 'text',
+          type: 'text',
+          label: 'Link Text',
+          setup: function(widget) {
+            this.setValue(widget.data.text);
+          },
+          commit: function(widget) {
+              widget.setData('text', this.getValue());
+          },
+        },
+        {
+          className: 'wk-select-action',
           id: 'action',
           type: 'select',
           label: 'Action',
+          'default': 'link',
           items: [
             ['Link to another page', 'link'],
             ['Link to another page in a new tab', 'link-tab'],
@@ -196,7 +373,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
             );
           },
           commit: function(widget) {
-              widget.setData('action', this.getValue());
+            saveValueIfVisible(this, widget);
           },
         },
         {
@@ -204,63 +381,49 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           type: 'text',
           label: 'URL',
           setup: function(widget) {
-            this.setValue(widget.data.reference);
+            setUpInput(this, widget);
 
-            conditionalInputs.reference = this;
-
-            var el = this.getInputElement().$;
-
-            window.addLinkitAttributes(el);
-
-            el.addEventListener(
+            this.getInputElement().$.addEventListener(
               'keyup',
               debouncedGetURLOptions,
             );
           },
           commit: function(widget) {
-              widget.setData('reference', this.getValue());
+            saveValueIfVisible(this, widget);
           },
           validate: function() {
-            if(!this.getValue()) {
-                alert('All fields are required');
-                return false;
-            }
-          },
+            return validateInput(this);
+          }
         },
         {
           id: 'form_node_id',
-          type: 'text',
+          type: 'select',
           label: 'Marketo Form ID',
+          'default': 'none',
+          items: populateMarketoFormIDs(),
           setup: function(widget) {
-            this.setValue(widget.data.reference);
-
-            var el = this.getInputElement().$;
-
-            conditionalInputs.form_node_id = this;
-
-            window.addLinkitAttributes(el);
-
+            setUpInput(this, widget);
           },
           commit: function(widget) {
-              widget.setData('marketo_form_id', this.getValue());
-          },
-        },
-        {
-          id: 'text',
-          type: 'text',
-          label: 'Text',
-          setup: function(widget) {
-              this.setValue(widget.data.text);
-          },
-          commit: function(widget) {
-              widget.setData('text', this.getValue());
+            saveValueIfVisible(this, widget);
           },
           validate: function() {
-            if(!this.getValue()) {
-                alert('All fields are required');
-                return false;
-            }
+            return validateInput(this);
+          }
+        },
+        {
+          id: 'wistia_video_id',
+          type: 'text',
+          label: 'Wistia Video ID',
+          setup: function(widget) {
+            setUpInput(this, widget);
           },
+          commit: function(widget) {
+            saveValueIfVisible(this, widget);
+          },
+          validate: function() {
+            return validateInput(this);
+          }
         },
       ]
     }],
