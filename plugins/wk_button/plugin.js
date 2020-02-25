@@ -5,6 +5,45 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/dialog.js');
 
+      function hardReset (el) {
+        var ckeClasses = el.getAttribute('class');
+        var dataAtts = [
+          'target',
+          'toggle',
+          'node-id',
+          'form-nid',
+          'target',
+          'toggle',
+          'entity-substitution',
+          'entity-type',
+          'entity-uuid',
+          'button-action',
+          'button-appearance',
+          'button-reference',
+          'button-text',
+        ];
+
+        if (ckeClasses){
+          var ckeClassesArray = ckeClasses.split(' ');
+
+          for (var i = 0; i < ckeClassesArray.length; i += 1) {
+            if (
+              ckeClassesArray[i] !== 'wk-cke-button' && ckeClassesArray[i] !== 'cke_widget_element'
+            ) {
+              el.removeClass(ckeClassesArray[i]);
+            }
+          }
+        }
+
+        for (var i = 0; i < dataAtts.length; i += 1) {
+          el.data(dataAtts[i], false);
+        }
+
+        el.removeAttribute('style');
+        el.removeAttribute('target');
+        el.setAttribute('href', '/');
+      }
+
       editor.widgets.add('wk_button', {
         button: 'Call to Action',
         editables: {},
@@ -49,6 +88,10 @@
             this.setData('reference', reference);
           }
 
+          if (formNodeId) {
+            this.setData('form_node_id', formNodeId);
+          }
+
           if (text) {
             this.setData('text', text);
           }
@@ -81,46 +124,7 @@
           const formNodeId = this.data.form_node_id;
           const additional = this.data.additional;
 
-          function hardReset () {
-            var ckeClasses = el.getAttribute('class');
-            var dataAtts = [
-              'target',
-              'toggle',
-              'node-id',
-              'form-nid',
-              'target',
-              'toggle',
-              'entity-substitution',
-              'entity-type',
-              'entity-uuid',
-              'button-action',
-              'button-appearance',
-              'button-reference',
-              'button-text',
-            ];
-
-            if (ckeClasses){
-              var ckeClassesArray = ckeClasses.split(' ');
-
-              for (var i = 0; i < ckeClassesArray.length; i += 1) {
-                if (
-                  ckeClassesArray[i] !== 'wk-cke-button' && ckeClassesArray[i] !== 'cke_widget_element'
-                ) {
-                  el.removeClass(ckeClassesArray[i]);
-                }
-              }
-            }
-
-            for (var i = 0; i < dataAtts.length; i += 1) {
-              el.data(dataAtts[i], false);
-            }
-
-            el.removeAttribute('style');
-            el.removeAttribute('target');
-            el.setAttribute('href', '/');
-          }
-
-          hardReset();
+          hardReset(el);
 
           if (action) {
             el.data('button-action', action);
@@ -134,9 +138,9 @@
                   const entityType = additional['entity-type'];
                   const entityUUID= additional['entity-uuid'];
 
-                  el.setAttribute('data-entity-substitution', entitySubstitution);
-                  el.setAttribute('data-entity-type', entityType);
-                  el.setAttribute('data-entity-uuid', entityUUID);
+                  el.data('entity-substitution', entitySubstitution);
+                  el.data('entity-type', entityType);
+                  el.data('entity-uuid', entityUUID);
                 }
 
                 break;
@@ -149,21 +153,21 @@
                   const entityType = additional['entity-type'];
                   const entityUUID= additional['entity-uuid'];
 
-                  el.setAttribute('data-entity-substitution', entitySubstitution);
-                  el.setAttribute('data-entity-type', entityType);
-                  el.setAttribute('data-entity-uuid', entityUUID);
+                  el.data('entity-substitution', entitySubstitution);
+                  el.data('entity-type', entityType);
+                  el.data('entity-uuid', entityUUID);
                 }
                 break;
               case 'form':
                 el.addClass('button-marketo-event');
-                el.setAttribute('data-target', '#wk_modal');
-                el.setAttribute('data-toggle', 'modal');
-                el.setAttribute('data-form-nid', formNodeId);
+                el.data('target', '#wk_modal');
+                el.data('toggle', 'modal');
+                el.data('form-nid', formNodeId);
 
                 if (additional) {
                   const nodeId = additional['nid'];
 
-                  el.setAttribute('data-nid', nodeId);
+                  el.data('nid', nodeId);
                 }
 
                 break;

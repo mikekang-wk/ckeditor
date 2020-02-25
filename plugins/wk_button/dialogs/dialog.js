@@ -5,11 +5,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   var actionSelect;
   var conditionalInputs = {};
-  var additionalFields = {
-    // data-entity-type: "node"
-    // data-entity-uuid: "7268ce9d-f351-4aaf-82ee-e2a86fce5f9f"
-    // data-substitution: "canonical"
-  };
+  var additionalFields;
 
   $.widget( "custom.catcomplete", $.ui.autocomplete, {
     _create: function() {
@@ -225,11 +221,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
     var input = event.target;
     var text = input.value;
-
-    if (text.length < minCharacterLength) {
-      return;
-    }
-
     var suggestions = [
       {
         "label": " Migration to new SOX technology picks up pace, report says",
@@ -331,10 +322,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     onShow: function() {
       actionSelect = document.querySelector('select.wk-select-action');
     },
-//    onOk: function(widget) {
-//      widget.setData('additional', additionalFields);
-//      console.log(this);
-//    },
     contents: [{
       id: 'tab1',
       expand: true,
@@ -345,6 +332,11 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
                 '</p>',
           id: 'widget_description',
           type: 'html',
+          setup: function(widget) {
+            clearAdditionalFields();
+
+            additionalFields = widget.data.additional;
+          },
           commit: function(widget) {
             widget.setData('additional', additionalFields);
           }
