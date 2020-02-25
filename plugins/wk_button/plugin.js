@@ -19,10 +19,19 @@
         dialog: 'wk_button',
         init: function() {
           const el = this.element;
-          const action = el.getAttribute('data-wk-cke-button-action');
-          const appearance = el.getAttribute('data-wk-cke-button-appearance');
-          const reference = el.getAttribute('data-wk-cke-button-reference');
-          const text = el.getAttribute('data-wk-cke-button-text');
+          const action = el.getAttribute('data-button-action');
+          const appearance = el.getAttribute('data-button-appearance');
+          const reference = el.getAttribute('data-button-reference');
+          const text = el.getAttribute('data-button-text');
+
+          const entitySubstitution = el.getAttribute('data-entity-substitution');
+          const entityType = el.getAttribute('data-entity-type');
+          const entityUUID = el.getAttribute('data-entity-uuid');
+
+          const formNodeId = el.getAttribute('data-form-nid');
+          const nodeId = el.getAttribute('data-nid');
+
+          const additionalFields = {};
 
           if (action) {
             this.setData('action', action);
@@ -43,14 +52,34 @@
           if (text) {
             this.setData('text', text);
           }
+
+          if (entitySubstitution) {
+            additionalFields['entity-substitution'] = entitySubstitution;
+          }
+
+          if (entityType) {
+            additionalFields['entity-uuid'] = entityType;
+          }
+
+          if (entityUUID) {
+            additionalFields['entity-uuid'] = entityUUID;
+          }
+
+          if (nodeId) {
+            additionalFields['nid'] = nodeId;
+          }
+
+          this.setData('additional', additionalFields);
         },
         data: function() {
           const el = this.element;
 
-          const action = this.data.action;
           const appearance = this.data.appearance;
-          const reference = this.data.reference;
           const text = this.data.text;
+          const action = this.data.action;
+          const reference = this.data.reference;
+          const formNodeId = this.data.form_node_id;
+          const additional = this.data.additional;
 
           function hardReset () {
             var ckeClasses = el.getAttribute('class');
@@ -64,10 +93,10 @@
               'entity-substitution',
               'entity-type',
               'entity-uuid',
-              'wk-cke-button-action',
-              'wk-cke-button-appearance',
-              'wk-cke-button-reference',
-              'wk-cke-button-text',
+              'button-action',
+              'button-appearance',
+              'button-reference',
+              'button-text',
             ];
 
             if (ckeClasses){
@@ -94,42 +123,49 @@
           hardReset();
 
           if (action) {
-            el.data('wk-cke-button-action', action);
+            el.data('button-action', action);
 
             switch (action) {
               case 'link':
                 el.setAttribute('href', reference);
 
-// if the data is not empty?
-//el.data('entity-substitution', canonical);
-//el.data('entity-type', node);
-//el.data('entity-uuid', 72f47db7-ff70-4fc1-afcd-35337d65ffc6);
+                if (additional) {
+                  const entitySubstitution = additional['entity-substitution'];
+                  const entityType = additional['entity-type'];
+                  const entityUUID= additional['entity-uuid'];
+
+                  el.setAttribute('data-entity-substitution', entitySubstitution);
+                  el.setAttribute('data-entity-type', entityType);
+                  el.setAttribute('data-entity-uuid', entityUUID);
+                }
 
                 break;
               case 'link-tab':
                 el.setAttribute('href', reference);
                 el.setAttribute('target', '_blank');
-//<a
-//  data-entity-substitution="canonical"
-//  data-entity-type="node"
-//  data-entity-uuid="72f47db7-ff70-4fc1-afcd-35337d65ffc6" href="/node/1612"
-//>
+
+                if (additional) {
+                  const entitySubstitution = additional['entity-substitution'];
+                  const entityType = additional['entity-type'];
+                  const entityUUID= additional['entity-uuid'];
+
+                  el.setAttribute('data-entity-substitution', entitySubstitution);
+                  el.setAttribute('data-entity-type', entityType);
+                  el.setAttribute('data-entity-uuid', entityUUID);
+                }
                 break;
               case 'form':
-//                console.log(window.getNodeId);
                 el.addClass('button-marketo-event');
                 el.setAttribute('data-target', '#wk_modal');
                 el.setAttribute('data-toggle', 'modal');
-//              el.setAttribute('data-form-nid', reference);
+                el.setAttribute('data-form-nid', formNodeId);
 
-//<a
-//  href="/events/amplify-local-new-york-city"
-//  class="btn btn-primary button-marketo-event"
-//  data-target="#wk_modal"
-//  data-toggle="modal"
-//  data-form-nid="4120"
-//  data-nid="3722" // still need to do this step!
-//>
+                if (additional) {
+                  const nodeId = additional['nid'];
+
+                  el.setAttribute('data-nid', nodeId);
+                }
+
                 break;
               case 'video':
                 el.addClass('wistia_embed');
@@ -144,7 +180,7 @@
           }
 
           if (appearance) {
-            el.data('wk-cke-button-appearance', appearance);
+            el.data('button-appearance', appearance);
 
             switch (appearance) {
               case 'link-arrow':
@@ -170,11 +206,11 @@
           }
 
           if (reference) {
-            el.data('wk-cke-button-reference', reference);
+            el.data('button-reference', reference);
           }
 
           if (text) {
-            el.data('wk-cke-button-text', text);
+            el.data('button-text', text);
             el.setText(text);
           }
         },

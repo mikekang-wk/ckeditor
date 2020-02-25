@@ -6,9 +6,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
   var actionSelect;
   var conditionalInputs = {};
   var additionalFields = {
-    // dump these atts into the link on gen
-    // grab these vars to store in widget data?
-
     // data-entity-type: "node"
     // data-entity-uuid: "7268ce9d-f351-4aaf-82ee-e2a86fce5f9f"
     // data-substitution: "canonical"
@@ -82,30 +79,28 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
         break;
     }
 
+    console.log('id', id);
+
     if (currentOption === selectedOption) {
       window.addLinkitAttributes(el);
-      that.setValue(widget.data.reference);
+
+      that.setValue(widget.data[id], widget.data[id]);
+
       getEl.show();
     } else {
       getEl.hide();
+
+      that.setValue(widget.data[id], null);
     }
   }
 
   function saveValueIfVisible(that, widget) {
     var getEl = that.getElement();
 
-    function saveRelatedValues() {
-// get all wk data attribute on the el? that?
-//    widget.setData('related_values', this.getValue());
-    }
-
     if (getEl.isVisible()) {
       widget.setData(that.id, that.getValue());
-
-      saveValuesIfNotEmpty();
     } else {
       widget.setData(that.id, null);
-//      widget.setData(that.id, null);
     }
   }
 
@@ -132,12 +127,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     additionalFields = {};
   }
 
-  function clearAllConditionalInputs() {
-    for (var key in conditionalInputs) {
-      conditionalInputs[key].getInputElement().$.value = '';
-    }
-  }
-
   function hideAllConditionalInputs() {
     for (var key in conditionalInputs) {
       conditionalInputs[key].getElement().hide();
@@ -150,7 +139,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
   }
 
   function handleFormNodeIdChangeEvent() {
-    additionalFields['data-nid'] = window.getNodeId;
+    additionalFields['nid'] = window.getNodeId();
 
     console.log(additionalFields);
   }
@@ -159,7 +148,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
     var selectedOption = getSelectedOption(actionSelect);
 
     hideAllConditionalInputs();
-    clearAllConditionalInputs();
     clearAdditionalFields();
 
     switch (selectedOption) {
@@ -214,9 +202,9 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           el.value = ui.item.path;
           el.title =  ui.item.value;
 
-          additionalFields['data-entity-uuid'] = ui.item.entity_uuid;
-          additionalFields['data-entity-type'] = ui.item.entity_type_id;
-          additionalFields['data-substitution'] = ui.item.substitution_id;
+          additionalFields['entity-uuid'] = ui.item.entity_uuid;
+          additionalFields['entity-type'] = ui.item.entity_type_id;
+          additionalFields['entity-substitution'] = ui.item.substitution_id;
 
           console.log(additionalFields);
 
@@ -339,13 +327,28 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   return {
     title: 'Call to Action Options',
+    description: 'test',
     onShow: function() {
       actionSelect = document.querySelector('select.wk-select-action');
     },
+//    onOk: function(widget) {
+//      widget.setData('additional', additionalFields);
+//      console.log(this);
+//    },
     contents: [{
       id: 'tab1',
       expand: true,
       elements: [
+        {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Use with callout blocks, not inlined in text' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+          commit: function(widget) {
+            widget.setData('additional', additionalFields);
+          }
+        },
         {
           className: 'wk-display-block',
           id: 'appearance',
@@ -413,8 +416,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
           },
           commit: function(widget) {
             saveValueIfVisible(this, widget);
-
-//            saveValuesIfNotEmpty(this, widget);
           },
           validate: function() {
             return validateInput(this);

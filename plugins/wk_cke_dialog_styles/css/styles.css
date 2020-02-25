@@ -1,3 +1,10 @@
+.wk-dialog-instructions {
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
 .cke_dialog td.cke_dialog_ui_vbox_child {
   padding: 0;
 }
