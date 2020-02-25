@@ -49,7 +49,8 @@ CKEDITOR.editorConfig = function( config ) {
     'wk_icons',
     'wk_two_column_builder',
     'wk_three_column_builder',
-//    'wk_image_stack',
+    'wk_content_swap',
+//  'wk_image_stack',
   ];
 
   config.extraPlugins = pluginsArray.join(",");
