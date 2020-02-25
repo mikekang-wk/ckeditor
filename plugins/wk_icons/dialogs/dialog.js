@@ -86,6 +86,13 @@ CKEDITOR.dialog.add('wk_icons', function(editor) {
       expand: true,
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Refer to Creative/Branding guidelines' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           id: 'size',
           type: 'select',
           label: 'Size',

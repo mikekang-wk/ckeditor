@@ -25,6 +25,13 @@ CKEDITOR.dialog.add('wk_card', function(editor) {
       expand: true,
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Generic container for isolated content' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           className: 'wk-display-block',
           id: 'shadow',
           type: 'radio',

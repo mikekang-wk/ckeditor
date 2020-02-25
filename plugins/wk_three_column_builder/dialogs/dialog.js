@@ -9,6 +9,13 @@ CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
       expand: true,
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Use similar amount of content in each column' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           type: 'html',
           html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
                 '<div>' +

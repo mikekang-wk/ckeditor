@@ -328,7 +328,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
       elements: [
         {
           html: '<p class="wk-dialog-instructions">' +
-                  'Use with callout blocks, not inlined in text' +
+                  'Use with callout blocks, not in line with text' +
                 '</p>',
           id: 'widget_description',
           type: 'html',

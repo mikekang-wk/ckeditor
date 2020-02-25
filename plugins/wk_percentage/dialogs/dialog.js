@@ -23,6 +23,13 @@ CKEDITOR.dialog.add('wk_percentage', function(editor) {
       expand: true,
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Combine with card and support text' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           type: 'html',
           html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
                 '<div>' +

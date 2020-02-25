@@ -25,6 +25,13 @@ CKEDITOR.dialog.add('wk_teaser', function(editor) {
       expand: true,
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Use this to link to articles' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           id: 'type',
           className: 'wk-display-block',
           type: 'radio',

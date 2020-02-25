@@ -26,10 +26,17 @@ CKEDITOR.dialog.add('wk_two_column_builder', function(editor) {
       title: '',
       elements: [
         {
+          html: '<p class="wk-dialog-instructions">' +
+                  'Image stacks above text on mobile' +
+                '</p>',
+          id: 'widget_description',
+          type: 'html',
+        },
+        {
           className: 'wk-display-block',
           id: 'layout',
           type: 'radio',
-          label: 'Choose Layout (note: IMAGE column stacks above TEXT column on mobile)',
+          label: 'Choose Layout',
           items: getTypeOptions(),
           setup: function(widget) {
               this.setValue(widget.data.layout);
