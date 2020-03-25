@@ -5,8 +5,13 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_percentage', this.path + 'dialogs/dialog.js');
 
+      editor.ui.addButton('wk_percentage', {
+        label: 'Percentage',
+        command: 'wk_percentage',
+        icon: this.path + 'icons/wk_percentage.png'
+      });
+
       editor.widgets.add('wk_percentage', {
-        button: 'Percent',
         dialog: 'wk_percentage',
         template: '<div data-js-animated-percentage class="wk-cke-percentage-animation percentage-animation">' +
                     '70' +

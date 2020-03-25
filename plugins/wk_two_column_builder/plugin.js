@@ -5,8 +5,13 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_two_column_builder', this.path + 'dialogs/dialog.js');
 
+      editor.ui.addButton('wk_two_column_builder', {
+        label: '2-column grid',
+        command: 'wk_two_column_builder',
+        icon: this.path + 'icons/wk_two_column_builder.png'
+      });
+
       editor.widgets.add('wk_two_column_builder', {
-        button: '2-Column Grid',
         dialog: 'wk_two_column_builder',
         template:
           '<div class="wk-cke-two-column-builder">' +

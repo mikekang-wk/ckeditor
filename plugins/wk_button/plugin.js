@@ -5,6 +5,12 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_button', this.path + 'dialogs/dialog.js');
 
+      editor.ui.addButton('wk_button', {
+        label: 'Button',
+        command: 'wk_button',
+        icon: this.path + 'icons/wk_button.png'
+      });
+
       function hardReset (el) {
         var ckeClasses = el.getAttribute('class');
         var dataAtts = [
@@ -45,7 +51,6 @@
       }
 
       editor.widgets.add('wk_button', {
-        button: 'Call to Action',
         editables: {},
         requiredContent: '(wk-cke-button)',
         template: '<a class="wk-cke-button" href="#"></a>',

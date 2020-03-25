@@ -5,8 +5,13 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_teaser', this.path + 'dialogs/dialog.js');
 
+      editor.ui.addButton('wk_teaser', {
+        label: 'Teaser',
+        command: 'wk_teaser',
+        icon: this.path + 'icons/wk_teaser.png'
+      });
+
       editor.widgets.add('wk_teaser', {
-        button: 'Teaser',
         dialog: 'wk_teaser',
         editables: {
           image: {

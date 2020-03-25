@@ -5,8 +5,13 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_three_column_builder', this.path + 'dialogs/dialog.js');
 
+      editor.ui.addButton('wk_three_column_builder', {
+        label: '3-column grid',
+        command: 'wk_three_column_builder',
+        icon: this.path + 'icons/wk_three_column_builder.png'
+      });
+
       editor.widgets.add('wk_three_column_builder', {
-        button: '3-Column Grid',
         dialog: 'wk_three_column_builder',
         template:
           '<div class="wk-cke-three-column-builder">' +
