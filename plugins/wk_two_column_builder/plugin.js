@@ -17,10 +17,10 @@
           '<div class="wk-cke-two-column-builder">' +
             '<div class="container wk-cke-container">' +
               '<div class="row wk-cke-row">' +
-                '<div class="col wk-cke-col-a">' +
+                '<div class="col-lg wk-cke-col-a">' +
                   'Col A' +
                 '</div>' +
-                '<div class="col wk-cke-col-b">' +
+                '<div class="col-lg wk-cke-col-b">' +
                   'Col B' +
                 '</div>' +
               '</div>' +
