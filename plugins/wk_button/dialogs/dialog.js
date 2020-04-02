@@ -38,6 +38,11 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
   function populateMarketoFormIDs() {
     var forms = editor.wkMarketoForms;
+
+    if (!forms) {
+      return null;
+    }
+
     var options = [];
 
     for (var i = 0; i < forms.length; i += 1) {
@@ -75,8 +80,6 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
         break;
     }
 
-    console.log('id', id);
-
     if (currentOption === selectedOption) {
       window.addLinkitAttributes(el);
 
@@ -95,6 +98,8 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
 
     if (getEl.isVisible()) {
       widget.setData(that.id, that.getValue());
+
+      console.log('saveValueIfVisible', that.id, that.getValue());
     } else {
       widget.setData(that.id, null);
     }
@@ -362,7 +367,7 @@ CKEDITOR.dialog.add('wk_button', function(editor) {
             this.setValue(widget.data.text);
           },
           commit: function(widget) {
-              widget.setData('text', this.getValue());
+            saveValueIfVisible(this, widget);
           },
           validate: function() {
             return validateInput(this);

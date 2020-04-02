@@ -42,18 +42,20 @@
         }
 
         for (var i = 0; i < dataAtts.length; i += 1) {
-          el.data(dataAtts[i], false);
+//          el.data(dataAtts[i], false);
+          el.removeAttribute('data-' + dataAtts[i]);
         }
 
         el.removeAttribute('style');
         el.removeAttribute('target');
-        el.setAttribute('href', '/');
+        el.removeAttribute('id');
+        el.setAttribute('href', '#');
       }
 
       editor.widgets.add('wk_button', {
         editables: {},
         requiredContent: '(wk-cke-button)',
-        template: '<a class="wk-cke-button" href="#"></a>',
+        template: '<a class="wk-cke-button"></a>',
         upcast: function(element) {
           return (
             element.name === 'a' &&
@@ -71,6 +73,8 @@
           const entitySubstitution = el.getAttribute('data-entity-substitution');
           const entityType = el.getAttribute('data-entity-type');
           const entityUUID = el.getAttribute('data-entity-uuid');
+
+          const videoId = el.getAttribute('data-button-video-id');
 
           const formNodeId = el.getAttribute('data-form-nid');
           const nodeId = el.getAttribute('data-nid');
@@ -93,6 +97,10 @@
             this.setData('reference', reference);
           }
 
+          if (videoId) {
+            this.setData('wistia_video_id', videoId);
+          }
+
           if (formNodeId) {
             this.setData('form_node_id', formNodeId);
           }
@@ -106,7 +114,7 @@
           }
 
           if (entityType) {
-            additionalFields['entity-uuid'] = entityType;
+            additionalFields['entity-type'] = entityType;
           }
 
           if (entityUUID) {
@@ -126,6 +134,7 @@
           const text = this.data.text;
           const action = this.data.action;
           const reference = this.data.reference;
+          const videoId = this.data.wistia_video_id;
           const formNodeId = this.data.form_node_id;
           const additional = this.data.additional;
 
@@ -136,23 +145,14 @@
 
             switch (action) {
               case 'link':
-                el.setAttribute('href', reference);
-
-                if (additional) {
-                  const entitySubstitution = additional['entity-substitution'];
-                  const entityType = additional['entity-type'];
-                  const entityUUID= additional['entity-uuid'];
-
-                  el.data('entity-substitution', entitySubstitution);
-                  el.data('entity-type', entityType);
-                  el.data('entity-uuid', entityUUID);
-                }
-
-                break;
               case 'link-tab':
                 el.setAttribute('href', reference);
                 el.setAttribute('target', '_blank');
 
+                // fix bug in CK4 around changing href
+                el.removeAttribute('_cke_saved_href');
+                el.$.removeAttribute('data-cke-saved-href');
+
                 if (additional) {
                   const entitySubstitution = additional['entity-substitution'];
                   const entityType = additional['entity-type'];
@@ -162,6 +162,7 @@
                   el.data('entity-type', entityType);
                   el.data('entity-uuid', entityUUID);
                 }
+
                 break;
               case 'form':
                 el.addClass('button-marketo-event');
@@ -178,14 +179,23 @@
                 break;
               case 'video':
                 el.addClass('wistia_embed');
-                el.addClass('wistia_async_' + reference);
                 el.addClass('popover=true');
                 el.addClass('popoverAnimateThumbnail=true');
                 el.addClass('popoverContent=link');
+
+                if (videoId) {
+                  el.addClass('wistia_async_' + videoId);
+                  el.setAttribute('id', 'wistia-' + videoId);
+                }
+
                 break;
               default:
                 break;
             };
+          }
+
+          if (videoId) {
+            el.data('button-video-id', videoId);
           }
 
           if (appearance) {
