@@ -5,11 +5,11 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_icons', this.path + 'dialogs/dialog.js');
 
-      editor.ui.addButton('wk_icons', {
-        label: 'Icon',
-        command: 'wk_icons',
-        icon: this.path + 'icons/wk_icons.png'
-      });
+//      editor.ui.addButton('wk_icons', {
+//        label: 'Icon',
+//        command: 'wk_icons',
+//        icon: this.path + 'icons/wk_icons.png'
+//      });
 
       editor.widgets.add('wk_icons', {
         dialog: 'wk_icons',

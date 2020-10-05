@@ -15,13 +15,13 @@ CKEDITOR.dialog.add('wk_three_column_builder', function(editor) {
           id: 'widget_description',
           type: 'html',
         },
-        {
-          type: 'html',
-          html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
-                '<div>' +
-                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'three-columns.jpg" />' +
-                '</div>'
-        },
+//        {
+//          type: 'html',
+//          html: '<label class="cke_dialog_ui_labeled_label">Example</label>' +
+//                '<div>' +
+//                  '<img class="wk-cke-dialog-image" src="' + imgPath + 'three-columns.jpg" />' +
+//                '</div>'
+//        },
         {
           id: 'spacing',
           type: 'select',

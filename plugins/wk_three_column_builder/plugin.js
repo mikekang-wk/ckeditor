@@ -5,30 +5,30 @@
     init: function(editor) {
       CKEDITOR.dialog.add('wk_three_column_builder', this.path + 'dialogs/dialog.js');
 
-      editor.ui.addButton('wk_three_column_builder', {
-        label: '3-column grid',
-        command: 'wk_three_column_builder',
-        icon: this.path + 'icons/wk_three_column_builder.png'
-      });
+//      editor.ui.addButton('wk_three_column_builder', {
+//        label: '3-column grid',
+//        command: 'wk_three_column_builder',
+//        icon: this.path + 'icons/wk_three_column_builder.png'
+//      });
 
       editor.widgets.add('wk_three_column_builder', {
         dialog: 'wk_three_column_builder',
-        template:
-          '<div class="wk-cke-three-column-builder">' +
-            '<div class="container wk-cke-container">' +
-              '<div class="row wk-cke-row">' +
-                '<div class="col-lg wk-cke-col-a">' +
-                  'Col A' +
-                '</div>' +
-                '<div class="col-lg wk-cke-col-b">' +
-                  'Col B' +
-                '</div>' +
-                '<div class="col-lg wk-cke-col-c">' +
-                  'Col C' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>',
+//        template:
+//          '<div class="wk-cke-three-column-builder">' +
+//            '<div class="container wk-cke-container">' +
+//              '<div class="row wk-cke-row">' +
+//                '<div class="col-lg wk-cke-col-a">' +
+//                  'Col A' +
+//                '</div>' +
+//                '<div class="col-lg wk-cke-col-b">' +
+//                  'Col B' +
+//                '</div>' +
+//                '<div class="col-lg wk-cke-col-c">' +
+//                  'Col C' +
+//                '</div>' +
+//              '</div>' +
+//            '</div>' +
+//          '</div>',
         editables: {
             colA: {
                 selector: '.wk-cke-col-a',
